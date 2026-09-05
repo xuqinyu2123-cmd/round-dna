@@ -646,3 +646,97 @@ body[data-view="quiz"]{background:radial-gradient(900px 480px at 2% -5%,rgba(255
   body[data-view="quiz"] .option{min-height:68px}
   body[data-view="quiz"] .majorTicker,.broadcastHud,.analystStrip{display:none!important}
 }
+
+/* V21 · Competitive Test Refinement */
+.mapFocusMask{
+  --focus-x:50%;--focus-y:50%;
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle at var(--focus-x) var(--focus-y),rgba(5,9,13,0) 0 13%,rgba(5,9,13,.08) 24%,rgba(5,9,13,.32) 48%,rgba(5,9,13,.52) 78%,rgba(5,9,13,.60) 100%);
+  transition:background-position .22s ease;
+}
+.scenePhoto{z-index:0!important;filter:saturate(.92) contrast(1.03) brightness(.88)!important}
+.sceneTactical{z-index:2!important;opacity:.9!important;filter:none!important}
+.sceneOverlay{z-index:3!important;background:linear-gradient(180deg,rgba(4,8,12,.03),rgba(4,8,12,.12))!important}
+.sceneHud,.weaponBar{z-index:5!important}
+
+/* Answer choices should read as alternatives, not personality labels */
+.optionCopy small{display:none!important}
+.optionIcon{opacity:.55}
+.option:hover .optionIcon{opacity:1}
+
+/* Result: headline first, detail second */
+.analysisHead h3#resultSummaryTitle{font-size:clamp(28px,3vw,46px);line-height:1.15;letter-spacing:-.035em;max-width:780px}
+.analysisHead p{max-width:780px;line-height:1.85;color:#aebdc8}
+.resultMetrics{grid-template-columns:1.2fr 1fr 1fr 1fr}
+
+@media (min-width:1080px){
+  body[data-view="quiz"] .topbar{height:54px;min-height:54px;margin-bottom:6px}
+  body[data-view="quiz"] .brandIcon{width:34px;height:34px}
+  body[data-view="quiz"] .brand b{font-size:16px}
+  body[data-view="quiz"] .brand small{font-size:6px}
+  body[data-view="quiz"] #quiz{height:calc(100dvh - 66px);gap:5px;padding:0 10px 8px}
+  body[data-view="quiz"] .majorBroadcastHead{display:none!important}
+  body[data-view="quiz"] .majorScoreboard{height:48px;min-height:48px;border-radius:9px}
+  body[data-view="quiz"] .teamPanel{padding:4px 9px}
+  body[data-view="quiz"] .teamPanel small{display:none}
+  body[data-view="quiz"] .teamPanel b{font-size:9px}
+  body[data-view="quiz"] .teamPanel span{font-size:6px}
+  body[data-view="quiz"] .teamPanel strong{font-size:18px}
+  body[data-view="quiz"] .teamLogo{width:24px;height:24px;font-size:8px}
+  body[data-view="quiz"] .roundCenter{padding:2px 8px}
+  body[data-view="quiz"] .roundCenter small{font-size:6px}
+  body[data-view="quiz"] .roundCenter b{font-size:8px}
+  body[data-view="quiz"] .roundCenter span{font-size:14px}
+  body[data-view="quiz"] .quizHeader{height:22px;min-height:22px;padding:0 3px}
+  body[data-view="quiz"] .quizTags span{padding:3px 6px}
+  body[data-view="quiz"] .progress{height:2px;min-height:2px}
+  body[data-view="quiz"] .quizGrid{grid-template-columns:minmax(0,1.08fr) minmax(410px,.92fr);gap:8px}
+  body[data-view="quiz"] .questionCard{padding:11px 13px}
+  body[data-view="quiz"] .questionScene{margin-bottom:5px}
+  body[data-view="quiz"] .questionScene small{font-size:7px}
+  body[data-view="quiz"] .scenarioBox{padding:7px 8px;margin-bottom:5px}
+  body[data-view="quiz"] .scenarioMeta{margin-bottom:4px}
+  body[data-view="quiz"] .scenarioMeta span{padding:4px 6px;font-size:6px}
+  body[data-view="quiz"] .scenarioBox p{font-size:9px;margin-bottom:4px}
+  body[data-view="quiz"] .scenarioFacts{gap:4px}
+  body[data-view="quiz"] .scenarioFacts span{font-size:8px;padding:5px 7px;line-height:1.28}
+  body[data-view="quiz"] .roundTimeline{height:22px;min-height:22px;margin-bottom:5px}
+  body[data-view="quiz"] .roundTimeline span{font-size:6px;padding:0 5px}
+  body[data-view="quiz"] .questionCard h2{font-size:clamp(19px,1.85vw,28px);line-height:1.12;margin:0 0 6px;letter-spacing:-.02em}
+  body[data-view="quiz"] .analystLowerThird{display:none!important}
+  body[data-view="quiz"] .options{gap:6px;flex:1}
+  body[data-view="quiz"] .option{padding:8px 9px;border-radius:10px}
+  body[data-view="quiz"] .optionKey{width:25px;height:25px;min-width:25px;font-size:8px}
+  body[data-view="quiz"] .optionCopy b{font-size:10.5px;line-height:1.3}
+  body[data-view="quiz"] .optionIcon{width:22px;height:22px;font-size:10px}
+  body[data-view="quiz"] .questionFoot{min-height:18px;margin-top:4px}
+  body[data-view="quiz"] .sceneCard{padding:6px;gap:5px}
+  body[data-view="quiz"] .observerLoadoutRail{height:34px;min-height:34px;gap:4px}
+  body[data-view="quiz"] .observerLoadoutRail article{padding:3px 5px}
+  body[data-view="quiz"] .observerLoadoutRail img{width:29px;height:24px}
+  body[data-view="quiz"] .observerLoadoutRail b{font-size:6px;max-width:95px}
+  body[data-view="quiz"] .observerLoadoutRail small{font-size:4.5px}
+  body[data-view="quiz"] .sceneHeroWrap{border-radius:10px}
+  body[data-view="quiz"] .sceneHud{padding:5px 7px;left:8px;top:8px;max-width:62%}
+  body[data-view="quiz"] .sceneHud small{font-size:5px}
+  body[data-view="quiz"] .sceneHud b{font-size:9px}
+  body[data-view="quiz"] .sceneHud span{font-size:5px}
+  body[data-view="quiz"] .broadcastMiniStats{height:34px;min-height:34px;gap:4px;margin-top:0}
+  body[data-view="quiz"] .broadcastMiniStats div{padding:4px 6px}
+  body[data-view="quiz"] .broadcastMiniStats small{font-size:4.5px}
+  body[data-view="quiz"] .broadcastMiniStats b{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+
+@media(max-width:1079px){
+  .majorBroadcastHead{display:none!important}
+  .majorScoreboard{margin-top:0}
+  .broadcastHud,.combatMeta,.analystStrip,.majorTicker{display:none!important}
+  .analystLowerThird{display:none!important}
+  .questionCard h2{font-size:clamp(24px,6vw,34px)}
+  .sceneHeroWrap{aspect-ratio:1/1;min-height:0!important}
+  .mapFocusMask{background:radial-gradient(circle at var(--focus-x) var(--focus-y),rgba(5,9,13,0) 0 15%,rgba(5,9,13,.12) 30%,rgba(5,9,13,.42) 70%,rgba(5,9,13,.54) 100%)}
+}
+@media (min-width:1080px){
+  body[data-view="quiz"] .options{flex:0 0 auto;grid-template-rows:repeat(2,minmax(92px,auto));align-content:start}
+  body[data-view="quiz"] .option{height:auto;min-height:92px}
+}

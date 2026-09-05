@@ -1,0 +1,6 @@
+ROUND//DNA V14 - third-party asset notes
+
+Tactical minimap base images used for the prototype were sourced from Total CS callout pages for Mirage, Inferno, Dust 2, Nuke, Ancient, Anubis, Vertigo and Train.
+Reference pages: https://totalcsgo.com/callouts
+
+These images are used here as prototype/testing assets. Total CS is not affiliated with Valve Corporation, and ROUND//DNA is not affiliated with Total CS or Valve. Before public commercial distribution, replace assets with properly licensed material or confirm applicable permission.

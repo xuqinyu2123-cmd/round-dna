@@ -233,3 +233,67 @@
 .miniRadar{height:170px;border-radius:16px;background:linear-gradient(180deg,#0c141d,#091018);border:1px solid rgba(255,255,255,.05)}
 @media(max-width:1180px){.heroCard{grid-template-columns:1fr}.heroMapStrip{grid-template-columns:1fr 1fr 1fr}.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{min-height:510px}}
 @media(max-width:760px){.heroCopy{padding:28px 20px}.heroCopy h1{font-size:48px}.heroMapStrip{grid-template-columns:1fr}.heroMapMini{grid-template-columns:100px 1fr}.quizView{padding:12px}.questionCard{padding:18px 14px}.questionCard h2{font-size:26px}.sceneHeroWrap{min-height:340px}.sceneHud{max-width:84%}.sceneThumbRow{grid-template-columns:1fr}.thumbCard{grid-template-columns:106px 1fr}}
+
+
+/* V13 exact minimap upgrade */
+.heroPhoto,.scenePhoto{display:block!important;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;filter:saturate(.88) contrast(1.06) brightness(.76)!important;opacity:1!important;z-index:0}
+.heroOverlayMap,.sceneTactical{display:block!important;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1!important;mix-blend-mode:normal!important;filter:none!important;pointer-events:none;z-index:1}
+.heroCard{grid-template-columns:1fr 1.06fr;min-height:760px;border-radius:30px;border:1px solid rgba(95,125,147,.48);background:radial-gradient(560px 360px at 0% 0%,rgba(255,173,25,.12),transparent 68%),radial-gradient(540px 340px at 100% 0%,rgba(92,188,255,.10),transparent 68%),linear-gradient(180deg,#0a1016,#081018 46%,#09111a)}
+.heroCopy{padding:clamp(38px,4.8vw,70px);background:linear-gradient(180deg,rgba(10,15,22,.96),rgba(8,12,18,.90))}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;width:max-content;padding:10px 14px;border-radius:999px;background:rgba(255,173,25,.08);border:1px solid rgba(255,173,25,.18);font-size:10px;letter-spacing:.24em}
+.heroCopy h1{max-width:680px;font-size:clamp(52px,6vw,86px);line-height:.9;letter-spacing:-.075em;margin:16px 0 18px}
+.heroCopy p{max-width:620px;font-size:15px;line-height:1.95;color:#c8d2da}
+.heroCopy p strong{color:#eef4f8}
+.heroMetrics{gap:12px;margin:28px 0}.heroMetrics>div{padding:18px 16px;border-radius:18px;border:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(14,21,29,.92),rgba(10,15,22,.82));box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.heroMetrics b{font-size:30px}.heroMetrics span{font-size:10px;color:#8da4b7;letter-spacing:.12em}
+.heroBtns .btn{min-height:52px;padding:14px 22px;border-radius:16px;font-size:14px}
+.heroVisual{padding:14px;background:linear-gradient(180deg,#081018,#09121a)}
+.heroStage{position:relative;min-height:540px;border-radius:26px;border:1px solid rgba(255,255,255,.08);overflow:hidden;background:#0b131b;box-shadow:0 28px 72px rgba(0,0,0,.34)}
+.heroStage:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,16,.08),rgba(7,11,16,.12));pointer-events:none;z-index:2}
+.visualShade{z-index:2;background:linear-gradient(180deg,rgba(7,11,16,.06),rgba(7,11,16,.08) 50%,rgba(7,11,16,.12) 100%)}
+.heroMapBadge{z-index:5;top:20px;right:20px;padding:10px 14px;border-radius:999px;background:rgba(7,12,17,.78);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(12px);font:800 9px monospace;letter-spacing:.18em}
+.heroStageInfo{z-index:5;left:18px;right:18px;bottom:18px;padding:18px 18px 16px;border-radius:20px;background:linear-gradient(180deg,rgba(7,12,17,.62),rgba(7,12,17,.80));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
+.heroStageInfo span{font-size:10px;letter-spacing:.18em;color:#ffc15b}.heroStageInfo b{display:block;margin-top:4px;font-size:22px;line-height:1.45}.heroStageInfo small{display:block;margin-top:6px;font-size:11px;line-height:1.75;color:#b9c7d0}
+.heroMapStrip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.heroMapMini{display:grid;grid-template-columns:126px 1fr;gap:12px;min-height:118px;padding:10px;border-radius:18px;border:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,#101821,#0a1016);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}.heroMapMini img{width:100%;height:100%;min-height:96px;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:#081018}.heroMapMini small{display:block;color:#ffad19;font:800 8px monospace;letter-spacing:.16em}.heroMapMini b{display:block;margin-top:7px;font-size:14px;line-height:1.45}.heroMapMini span{display:block;margin-top:5px;color:#8ea3b3;font-size:10px;line-height:1.65}
+.arsenalRail{padding:18px;border-color:rgba(255,255,255,.06);background:linear-gradient(180deg,#0d141b,#081018)}
+.arsenalHead b{font-size:16px;line-height:1.75}
+.quizGrid{grid-template-columns:1.04fr .96fr;gap:16px}
+.sceneCard{padding:14px;border-radius:24px;overflow:visible;background:linear-gradient(180deg,#0d141b,#091018)}
+.sceneHeroWrap{position:relative;min-height:600px;border-radius:22px;overflow:hidden;background:#091018;border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+.sceneHeroWrap:after{content:'';position:absolute;inset:0;border-radius:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03);pointer-events:none;z-index:3}
+.sceneOverlay{z-index:2;background:linear-gradient(180deg,rgba(5,9,13,.02),rgba(5,9,13,.02))!important}
+.sceneHud{z-index:5;left:16px;top:16px;max-width:70%;padding:13px 15px;border-radius:18px;background:linear-gradient(180deg,rgba(7,12,17,.66),rgba(7,12,17,.82));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
+.sceneHud b{font-size:24px}.sceneHud span{font-size:11px;line-height:1.65;color:#9cb0c0}
+.killFeedPanel{display:none!important}.sceneCross{display:none!important}
+.weaponBar{z-index:5;left:16px;right:16px;bottom:14px;gap:8px}.weaponBar span{padding:8px 11px;background:rgba(7,12,17,.82);border-color:rgba(255,255,255,.09)}
+.thumbCard{grid-template-columns:132px 1fr;background:linear-gradient(180deg,#101922,#0b1117)}.thumbCard img{object-fit:cover;background:#081018}
+@media(max-width:1180px){.heroCard{grid-template-columns:1fr}.heroVisual{min-height:auto}.heroStage{min-height:520px}.heroMapStrip{grid-template-columns:1fr 1fr 1fr}.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{min-height:520px}}
+@media(max-width:760px){.heroCopy{padding:28px 20px}.heroCopy h1{font-size:50px}.heroMapStrip{grid-template-columns:1fr}.heroMapMini{grid-template-columns:100px 1fr}.sceneHeroWrap{min-height:360px}.sceneHud{max-width:84%}.thumbCard{grid-template-columns:108px 1fr}}
+
+
+/* V14 ROUND SNAPSHOT EDITION */
+body{background:radial-gradient(900px 600px at -8% -6%,rgba(255,166,30,.13),transparent 58%),radial-gradient(850px 560px at 108% 0%,rgba(82,183,255,.11),transparent 60%),linear-gradient(180deg,#05080c,#081019 50%,#05080c)}
+.appShell{width:min(1280px,calc(100% - 28px));padding-top:14px}
+.topbar{border-radius:18px;border-color:rgba(90,119,142,.52);background:rgba(6,10,15,.82);box-shadow:0 18px 50px rgba(0,0,0,.25)}
+.heroCard{grid-template-columns:.92fr 1.08fr;min-height:720px;border-radius:32px;background:linear-gradient(135deg,rgba(13,19,26,.98),rgba(7,12,18,.98));overflow:hidden}
+.heroCopy{position:relative;padding:clamp(42px,5vw,76px);background:radial-gradient(520px 360px at 15% 20%,rgba(255,166,30,.09),transparent 72%)}
+.heroCopy:before{content:'ROUND  //  DNA';position:absolute;top:32px;right:36px;color:rgba(255,255,255,.035);font:900 clamp(38px,4vw,70px) monospace;letter-spacing:.04em;pointer-events:none}
+.eyebrow{margin-bottom:12px;background:rgba(255,166,30,.065);border-color:rgba(255,166,30,.20);color:#ffbb45}
+.heroCopy h1{font-size:clamp(52px,5.7vw,78px);line-height:.94;letter-spacing:-.065em;max-width:650px;margin:12px 0 22px}.heroCopy h1 span{background:linear-gradient(135deg,#ffc15a,#ff7a00);-webkit-background-clip:text;background-clip:text;color:transparent}
+.heroCopy p{font-size:15px;line-height:2;color:#bdcad3;max-width:610px}
+.heroMetrics{grid-template-columns:repeat(2,1fr);max-width:540px}.heroMetrics>div{min-height:84px;padding:17px 18px;background:linear-gradient(180deg,rgba(15,24,33,.90),rgba(9,15,21,.82));border-color:rgba(255,255,255,.065)}.heroMetrics b{font-size:28px}.heroMetrics span{font-size:10px}
+.heroVisual{padding:16px;background:linear-gradient(180deg,#09111a,#081018)}.heroVisualGrid{grid-template-rows:minmax(0,1fr) auto;gap:14px}.heroStage{aspect-ratio:1/1;min-height:0;border-radius:26px;background:#05080c;border-color:rgba(255,255,255,.075);box-shadow:0 30px 80px rgba(0,0,0,.36)}
+.heroPhoto{display:block!important;object-fit:contain!important;filter:saturate(.94) contrast(1.03) brightness(.88)!important;background:#05080c}.heroOverlayMap{display:none!important}.visualShade{background:linear-gradient(180deg,rgba(4,8,12,0),rgba(4,8,12,.02) 60%,rgba(4,8,12,.18))!important}
+.heroMapBadge{padding:9px 13px;background:rgba(5,9,13,.78);font-size:8px}.heroStageInfo{left:16px;right:16px;bottom:16px;padding:15px 16px;background:rgba(6,10,14,.78);border-radius:17px}.heroStageInfo b{font-size:18px}.heroStageInfo small{font-size:10px}
+.heroMapStrip{gap:10px}.heroMapMini{grid-template-columns:112px 1fr;min-height:104px;padding:8px;border-radius:16px;background:linear-gradient(180deg,#0d151e,#091018)}.heroMapMini img{min-height:88px;object-fit:contain;background:#05080c;border-radius:10px}.heroMapMini b{font-size:13px}.heroMapMini span{font-size:9px}
+.peakRail,.arsenalRail{border-radius:22px;background:linear-gradient(180deg,rgba(12,19,26,.96),rgba(8,13,19,.96))}
+.quizView{padding:20px}.quizHeader{padding:2px 4px}.combatMeta{gap:10px;margin-top:14px}.metaStat{padding:13px 15px;border-radius:15px;background:linear-gradient(180deg,#0e1720,#0a1118)}
+.quizGrid{grid-template-columns:minmax(0,1.03fr) minmax(480px,.97fr);gap:18px;margin-top:16px}.questionCard{padding:30px 28px;border-radius:24px}.questionCard h2{font-size:clamp(31px,3.2vw,44px);line-height:1.24}.scenarioBox{background:linear-gradient(180deg,#111b25,#0b131b);border-color:rgba(255,255,255,.055)}
+.sceneStack{display:grid;gap:14px;align-content:start}.sceneCard{padding:12px;border-radius:24px;background:linear-gradient(180deg,#0d151d,#081018)}.sceneHeroWrap{aspect-ratio:1/1;min-height:0!important;border-radius:20px;background:#05080c;box-shadow:0 20px 54px rgba(0,0,0,.28)}
+.scenePhoto{display:block!important;object-fit:contain!important;filter:saturate(.96) contrast(1.03) brightness(.91)!important;background:#05080c;z-index:0}.sceneTactical{display:none!important}.sceneOverlay{display:none!important}.sceneHeroWrap:after{border-radius:20px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.sceneHud{left:14px;top:14px;max-width:66%;padding:10px 12px;border-radius:14px;background:rgba(5,9,13,.76);backdrop-filter:blur(9px)}.sceneHud small{font-size:8px}.sceneHud b{font-size:18px}.sceneHud span{font-size:9px}.weaponBar{left:14px;right:14px;bottom:12px}.weaponBar span{font-size:8px;padding:7px 9px;background:rgba(5,9,13,.80)}
+.sceneThumbRow{gap:10px;margin-top:10px}.thumbCard{grid-template-columns:112px 1fr;min-height:102px;padding:8px;border-radius:15px}.thumbCard img{min-height:84px;object-fit:contain;background:#05080c}.thumbCard b{font-size:12px}.thumbCard small{font-size:7px}
+.skinStrip{gap:9px}.skinMini{min-height:80px}.intelGrid{grid-template-columns:.88fr 1.12fr;gap:12px}.miniRadar{height:220px!important;background-color:#05080c!important;background-repeat:no-repeat!important;background-position:center!important;background-size:contain!important}.miniRadar>*{display:none!important}
+.intelCard{border-radius:20px}.intelList li{font-size:11px;line-height:1.76}.analysisPanel{border-radius:24px}
+@media(max-width:1120px){.heroCard{grid-template-columns:1fr}.heroVisual{padding-top:0}.heroStage{max-width:760px;width:100%;margin:auto}.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{max-width:760px;width:100%;margin:auto}.intelGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.appShell{width:min(100% - 14px,1280px)}.topbar{top:5px}.heroCopy{padding:30px 20px}.heroCopy:before{display:none}.heroCopy h1{font-size:48px;line-height:.96}.heroMetrics{grid-template-columns:1fr 1fr}.heroVisual{padding:10px}.heroStage{border-radius:20px}.heroMapStrip{grid-template-columns:1fr}.heroMapMini{grid-template-columns:94px 1fr}.quizView{padding:10px}.combatMeta{grid-template-columns:repeat(2,1fr)}.questionCard{padding:19px 15px}.questionCard h2{font-size:27px}.sceneCard{padding:8px}.sceneHeroWrap{border-radius:16px}.sceneHud{max-width:78%;padding:8px 10px}.sceneHud b{font-size:15px}.weaponBar{display:none}.sceneThumbRow{grid-template-columns:1fr}.thumbCard{grid-template-columns:92px 1fr}.intelGrid{grid-template-columns:1fr}.miniRadar{height:280px!important}}

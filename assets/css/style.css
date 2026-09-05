@@ -113,3 +113,82 @@
 .skinStrip{display:none!important}
 @media(max-width:1120px){.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{min-height:460px}}
 @media(max-width:700px){.questionCard{padding:16px 12px}.questionCard h2{font-size:24px}.sceneHeroWrap{min-height:310px}.sceneThumbRow{grid-template-columns:1fr}.arsenalGrid{grid-template-columns:1fr 1fr}.thumbCard{min-height:132px}.thumbCard img{height:94px}}
+
+/* V10 cinematic maps refinement */
+.heroCard{grid-template-columns:1.02fr .98fr;min-height:680px;border-color:rgba(81,109,131,.55);background:linear-gradient(180deg,#0b1015,#0a1016)}
+.heroCopy{padding:clamp(30px,4.2vw,56px);background:radial-gradient(520px 360px at 0% 12%,rgba(255,173,25,.12),transparent 68%),radial-gradient(420px 260px at 42% 100%,rgba(92,188,255,.09),transparent 72%)}
+.heroCopy h1{font-size:clamp(48px,6vw,78px);line-height:.93;letter-spacing:-.06em}
+.heroCopy p{max-width:640px;color:#c0ccd4;font-size:15px;line-height:1.9}
+.heroMetrics{gap:10px;margin:22px 0}.heroMetrics>div{padding:14px 12px;border-color:rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(12,18,25,.84),rgba(9,14,19,.72))}
+.heroMetrics b{font-size:24px}.heroMetrics span{font-size:10px}
+.heroBtns .btn{min-height:48px}
+.heroVisual{padding:10px;background:linear-gradient(180deg,rgba(255,173,25,.05),rgba(255,255,255,.01))}
+.heroVisualGrid{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px}
+.heroStage{min-height:450px;border-radius:24px;background:linear-gradient(180deg,#091019,#0b1219);border:1px solid rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 30px 60px rgba(0,0,0,.24)}
+.heroStageInfo{left:20px;right:20px;bottom:18px;padding:18px 18px 16px;border-radius:18px;background:linear-gradient(180deg,rgba(7,11,16,.78),rgba(7,11,16,.92));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px)}
+.heroStageInfo span{font-size:9px;letter-spacing:.18em}.heroStageInfo b{font-size:18px;line-height:1.5}.heroStageInfo small{font-size:11px;line-height:1.75;color:#acbeca}
+.heroMapBadge{top:16px;right:16px;padding:10px 13px;border-radius:999px;background:rgba(7,11,16,.82);border:1px solid rgba(255,255,255,.09);font-size:9px}
+.heroMapStrip{gap:12px}.heroMapMini{grid-template-columns:130px 1fr;gap:12px;padding:9px;border-radius:18px;border-color:rgba(255,255,255,.07);background:linear-gradient(180deg,#0d151d,#0a1016);box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
+.heroMapMini img{height:100%;min-height:92px;border-radius:12px;border:1px solid rgba(255,255,255,.05)}
+.heroMapMini b{font-size:13px;line-height:1.5}.heroMapMini span{font-size:10px;line-height:1.55}
+.quizGrid{grid-template-columns:minmax(0,1.01fr) minmax(490px,.99fr);gap:18px}
+.questionCard,.sceneCard,.analysisPanel,.peakCaption{border-color:rgba(78,104,126,.55)}
+.questionCard{padding:26px 24px;background:linear-gradient(180deg,#0d141b,#0a1016)}
+.questionScene{margin-bottom:16px}.questionScene small{font-size:12px;line-height:1.75;color:#90a4b3}
+.scenarioBox{padding:18px;border-radius:18px;background:linear-gradient(180deg,#111a24,#0b1117)}
+.scenarioMeta span{font-size:9px;padding:8px 11px}.scenarioBox p{font-size:14px;line-height:1.8}.scenarioFacts span{font-size:11px;padding:12px 13px;line-height:1.75;background:#0c131b}
+.questionCard h2{font-size:clamp(28px,3.2vw,42px);line-height:1.32;letter-spacing:-.03em;margin-bottom:20px}
+.option{padding:15px 15px;border-radius:17px;border-color:rgba(93,121,145,.48);background:linear-gradient(180deg,#16212d,#121b24)}
+.optionCopy b{font-size:15px}.optionCopy small{font-size:9px}
+.sceneCard{padding:14px;background:linear-gradient(180deg,#0c1218,#081018)}
+.sceneHeroWrap{min-height:560px;border-radius:22px;background:#071018;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.sceneHeroWrap>img{object-fit:cover}
+.sceneOverlay{background:linear-gradient(180deg,rgba(7,11,16,.04),rgba(7,11,16,.10))!important}
+.sceneHud{left:16px;top:16px;right:16px;padding:12px 14px;border-radius:16px;background:linear-gradient(180deg,rgba(7,11,16,.78),rgba(7,11,16,.92));border:1px solid rgba(255,255,255,.09)}
+.sceneHud small{font-size:10px;letter-spacing:.18em}.sceneHud b{font-size:22px}.sceneHud span{font-size:11px;color:#9eb1bf}
+.weaponBar{left:16px;right:16px;bottom:14px;gap:9px}.weaponBar span{padding:8px 11px;font-size:8px;background:rgba(7,11,16,.85);border-color:rgba(255,255,255,.09)}
+.sceneThumbRow{grid-template-columns:1fr 1fr;gap:12px}.thumbCard{grid-template-columns:1fr;min-height:176px;padding:10px;background:linear-gradient(180deg,#101923,#0b1117);border-color:rgba(255,255,255,.07)}.thumbCard img{height:126px;border-radius:14px}.thumbCard small{font-size:8px}.thumbCard b{font-size:14px;line-height:1.55}
+.intelGrid{gap:12px}.intelCard{padding:15px;border-radius:20px;background:linear-gradient(180deg,#0e1620,#091018)}.intelHead b{font-size:15px}.intelList li{font-size:11px;line-height:1.8;padding:11px 12px 11px 32px}
+.arsenalRail{padding:16px 18px;border-color:rgba(255,255,255,.06);background:linear-gradient(180deg,#0d141b,#081018)}
+.skinCard{grid-template-columns:92px 1fr;min-height:102px}.skinCard img{height:100%;border-right:1px solid rgba(255,255,255,.06)}
+@media(max-width:1120px){.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{min-height:480px}}
+@media(max-width:780px){.heroMapMini{grid-template-columns:96px 1fr}.heroStage{min-height:280px}.questionCard{padding:18px 14px}.questionCard h2{font-size:26px}.sceneHeroWrap{min-height:320px}.thumbCard{min-height:140px}.thumbCard img{height:98px}}
+
+/* V11 REAL SCENE EDITION */
+.heroPhoto,.scenePhoto{display:block!important;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1!important;filter:saturate(.96) contrast(1.05) brightness(.78)!important;transform:scale(1.015)}
+.heroOverlayMap,.sceneTactical{display:block!important;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;mix-blend-mode:normal!important;opacity:.92!important;filter:none!important;pointer-events:none}
+.heroCard{grid-template-columns:.94fr 1.06fr;min-height:700px;border-radius:28px;border-color:rgba(94,117,135,.5);background:linear-gradient(180deg,#0a1016,#071018)}
+.heroCopy{padding:clamp(34px,4.6vw,62px);justify-content:center;background:radial-gradient(640px 420px at 0% 10%,rgba(255,173,25,.13),transparent 70%),linear-gradient(180deg,#0c1116,#081018)}
+.eyebrow{font-size:10px;letter-spacing:.26em;margin-bottom:18px}
+.heroCopy h1{max-width:660px;font-size:clamp(46px,5.4vw,74px);line-height:.94;letter-spacing:-.065em;margin-bottom:22px;text-wrap:balance}
+.heroCopy p{max-width:620px;font-size:15px;line-height:1.92;color:#c5d0d8}
+.heroMetrics{margin:24px 0 22px;gap:10px}.heroMetrics>div{padding:15px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(15,23,31,.82),rgba(9,15,21,.72))}.heroMetrics b{font-size:25px}.heroMetrics span{font-size:10px}
+.heroBtns{gap:10px}.heroBtns .btn{min-height:50px;padding:14px 20px;border-radius:14px;font-size:14px}.hint{margin-top:18px;padding:13px 15px;font-size:11px;background:rgba(255,173,25,.04)}
+.heroVisualGrid{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;padding:12px}
+.heroStage{min-height:500px;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 28px 70px rgba(0,0,0,.32);background:#081018}
+.visualShade{z-index:1;background:linear-gradient(180deg,rgba(5,8,12,.10),rgba(5,8,12,.12) 38%,rgba(5,8,12,.78) 88%),linear-gradient(90deg,rgba(5,8,12,.18),transparent 34%,rgba(5,8,12,.08))}
+.heroOverlayMap{z-index:1;opacity:.36!important}
+.heroMapBadge{z-index:4;top:18px;right:18px;padding:9px 12px;background:rgba(6,10,14,.72);border-color:rgba(255,255,255,.10);backdrop-filter:blur(12px)}
+.matchHud{z-index:3;top:18px;left:18px;right:18px}.hudScore{background:rgba(5,9,13,.70);border-color:rgba(255,255,255,.10);backdrop-filter:blur(12px)}
+.hudKill{background:rgba(5,9,13,.68);border-color:rgba(255,255,255,.08)}
+.crosshair{z-index:2;opacity:.58}.loadout{z-index:4}
+.heroStageInfo{z-index:4;left:18px;right:18px;bottom:18px;padding:17px 18px;border-radius:18px;background:linear-gradient(180deg,rgba(6,10,14,.68),rgba(6,10,14,.88));border-color:rgba(255,255,255,.09);backdrop-filter:blur(14px)}
+.heroStageInfo b{font-size:18px}.heroStageInfo small{font-size:11px;color:#b2c0ca}
+.heroMapStrip{grid-template-columns:repeat(3,1fr);gap:12px}.heroMapMini{grid-template-columns:132px 1fr;min-height:104px;border-radius:18px;background:linear-gradient(180deg,#0e1720,#0a1016);border-color:rgba(255,255,255,.07)}.heroMapMini img{height:100%;min-height:88px;border-radius:12px;filter:saturate(.95) contrast(1.04)!important}.heroMapMini b{font-size:13px}.heroMapMini span{font-size:10px}
+.quizView{padding:18px}.combatMeta{gap:10px}.metaStat{padding:12px 13px;border-radius:15px;background:linear-gradient(180deg,#0e151d,#0a1016)}.metaStat small{font-size:8px}.metaStat b{font-size:15px}
+.quizGrid{grid-template-columns:minmax(0,1fr) minmax(500px,1fr);gap:18px}
+.questionCard{padding:27px 24px;border-radius:22px;background:linear-gradient(180deg,#0d141b,#091018)}
+.questionScene{margin-bottom:15px}.questionScene span{padding:8px 10px}.questionScene small{font-size:12px;color:#9aafbd}
+.scenarioBox{padding:18px;border-radius:18px;background:linear-gradient(180deg,#111b26,#0b1219);border-color:rgba(255,255,255,.06)}.scenarioMeta{gap:8px}.scenarioMeta span{font-size:9px;padding:8px 11px}.scenarioBox p{font-size:14px;line-height:1.85;color:#e1e8ed}.scenarioFacts{gap:8px}.scenarioFacts span{padding:12px 13px;font-size:11px;line-height:1.75;background:#0b1219}
+.questionCard h2{font-size:clamp(29px,3.3vw,43px);line-height:1.31;margin:0 0 20px;letter-spacing:-.035em}
+.options{gap:10px}.option{padding:15px 15px;border-radius:17px;background:linear-gradient(180deg,#17232f,#121b24);border-color:rgba(91,119,143,.48)}.option:hover{border-color:#6d8ba3;box-shadow:0 10px 22px rgba(0,0,0,.14)}.optionCopy b{font-size:15px}.optionCopy small{font-size:9px}
+.sceneCard{padding:12px;border-radius:22px;background:linear-gradient(180deg,#0b1219,#081018)}
+.sceneHeroWrap{min-height:570px;border-radius:20px;overflow:hidden;background:#071018;border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 42px rgba(0,0,0,.22)}
+.scenePhoto{z-index:0}.sceneTactical{z-index:1;opacity:.48!important}.sceneOverlay{z-index:2;background:linear-gradient(180deg,rgba(4,7,10,.06),rgba(4,7,10,.12) 46%,rgba(4,7,10,.68) 100%)!important}
+.sceneHud{z-index:4;left:16px;right:auto;top:16px;max-width:68%;padding:12px 14px;border-radius:16px;background:rgba(6,10,14,.74);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(12px)}.sceneHud small{font-size:9px}.sceneHud b{font-size:22px}.sceneHud span{font-size:10px;color:#9db0bd}
+.killFeedPanel{display:none!important}.sceneCross{z-index:3;opacity:.54}.weaponBar{z-index:4;left:16px;right:16px;bottom:14px;gap:8px}.weaponBar span{padding:8px 11px;background:rgba(6,10,14,.82);border-color:rgba(255,255,255,.09)}
+.sceneThumbRow{grid-template-columns:1fr 1fr;gap:12px;margin-top:0}.thumbCard{grid-template-columns:126px 1fr;min-height:118px;padding:9px;border-radius:16px;background:linear-gradient(180deg,#0f1821,#0a1016);border-color:rgba(255,255,255,.07)}.thumbCard img{width:100%;height:100%;min-height:96px;border-radius:11px;object-fit:cover}.thumbCard small{font-size:8px}.thumbCard b{font-size:13px;line-height:1.55;margin-top:6px}
+.intelCard{padding:15px;border-radius:20px;background:linear-gradient(180deg,#0e1620,#091018)}.intelHead b{font-size:15px}.intelList li{font-size:11px;line-height:1.8;padding:11px 12px 11px 32px}
+.peakRail{border-radius:22px;background:linear-gradient(180deg,#0c1218,#091018)}
+@media(max-width:1180px){.heroCard{grid-template-columns:1fr}.heroVisual{min-height:620px}.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{min-height:500px}}
+@media(max-width:760px){.heroCopy{padding:28px 20px}.heroCopy h1{font-size:48px}.heroVisual{min-height:auto}.heroStage{min-height:300px}.heroMapStrip{grid-template-columns:1fr}.heroMapMini{grid-template-columns:100px 1fr}.quizView{padding:12px}.questionCard{padding:18px 14px}.questionCard h2{font-size:26px}.sceneHeroWrap{min-height:330px}.sceneHud{max-width:82%}.sceneThumbRow{grid-template-columns:1fr}.thumbCard{grid-template-columns:106px 1fr}}

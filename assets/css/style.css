@@ -556,3 +556,93 @@ body[data-view="quiz"]{background:radial-gradient(900px 480px at 2% -5%,rgba(255
  .cosmeticDeck{grid-template-columns:1fr!important}
  .cosmeticCard{min-height:130px}
 }
+
+
+/* V20 — coherent question bank + one-screen quiz layout */
+@media (min-width: 1080px){
+  body[data-view="quiz"]{overflow:hidden}
+  body[data-view="quiz"] .appShell{height:100dvh;overflow:hidden;padding-bottom:0}
+  body[data-view="quiz"] .topbar{height:62px;min-height:62px;margin-bottom:8px}
+  body[data-view="quiz"] #quiz{height:calc(100dvh - 78px);overflow:hidden;padding:0 12px 10px;display:flex!important;flex-direction:column;gap:7px}
+  body[data-view="quiz"] .majorBroadcastHead{height:36px;min-height:36px;padding:0 12px;margin:0;border-radius:9px}
+  body[data-view="quiz"] .majorBrand .majorLogo{width:23px;height:23px;font-size:9px}
+  body[data-view="quiz"] .majorBrand small{display:none}
+  body[data-view="quiz"] .majorBrand b{font-size:10px}
+  body[data-view="quiz"] .seriesState{font-size:8px}
+  body[data-view="quiz"] .liveState{font-size:8px}
+  body[data-view="quiz"] .majorScoreboard{height:55px;min-height:55px;margin:0;border-radius:10px}
+  body[data-view="quiz"] .teamPanel{padding:6px 12px}
+  body[data-view="quiz"] .teamPanel small{font-size:6px}
+  body[data-view="quiz"] .teamPanel b{font-size:10px}
+  body[data-view="quiz"] .teamPanel span{font-size:7px}
+  body[data-view="quiz"] .teamPanel strong{font-size:20px}
+  body[data-view="quiz"] .teamLogo{width:28px;height:28px;font-size:9px}
+  body[data-view="quiz"] .roundCenter{padding:4px 8px}
+  body[data-view="quiz"] .roundCenter small{font-size:7px}
+  body[data-view="quiz"] .roundCenter b{font-size:9px}
+  body[data-view="quiz"] .roundCenter span{font-size:15px}
+  body[data-view="quiz"] .roundDots{display:none}
+  body[data-view="quiz"] .majorTicker,
+  body[data-view="quiz"] .broadcastHud,
+  body[data-view="quiz"] .combatMeta,
+  body[data-view="quiz"] .analystStrip{display:none!important}
+  body[data-view="quiz"] .quizHeader{height:26px;min-height:26px;margin:0;padding:0 4px}
+  body[data-view="quiz"] .quizHeader small{font-size:7px}
+  body[data-view="quiz"] .quizHeader b{font-size:10px}
+  body[data-view="quiz"] .quizTags span{padding:4px 7px;font-size:7px}
+  body[data-view="quiz"] .progress{height:3px;min-height:3px;margin:0}
+  body[data-view="quiz"] .quizGrid{flex:1;min-height:0;overflow:hidden;grid-template-columns:minmax(0,1.04fr) minmax(420px,.96fr);gap:10px;margin:0}
+  body[data-view="quiz"] .questionCard{height:100%;min-height:0;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column}
+  body[data-view="quiz"] .questionScene{margin:0 0 7px}
+  body[data-view="quiz"] .questionScene span{padding:5px 8px;font-size:8px}
+  body[data-view="quiz"] .questionScene small{font-size:8px;line-height:1.4}
+  body[data-view="quiz"] .scenarioBox{padding:9px 10px;margin-bottom:7px}
+  body[data-view="quiz"] .scenarioMeta{gap:5px;margin-bottom:6px}
+  body[data-view="quiz"] .scenarioMeta span{padding:5px 7px;font-size:7px}
+  body[data-view="quiz"] .scenarioBox p{font-size:10px;margin:0 0 6px;line-height:1.4}
+  body[data-view="quiz"] .scenarioFacts{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  body[data-view="quiz"] .scenarioFacts span{font-size:9px;line-height:1.4;padding:7px 8px}
+  body[data-view="quiz"] .roundTimeline{height:26px;min-height:26px;margin:0 0 7px;gap:4px}
+  body[data-view="quiz"] .roundTimeline span{padding:0 7px;font-size:7px}
+  body[data-view="quiz"] .questionCard h2{font-size:clamp(21px,2vw,31px);line-height:1.16;margin:0 0 7px;letter-spacing:-.025em}
+  body[data-view="quiz"] .analystLowerThird{padding:7px 9px;margin:0 0 8px;min-height:31px}
+  body[data-view="quiz"] .analystLowerThird span{font-size:7px}
+  body[data-view="quiz"] .analystLowerThird b{font-size:9px}
+  body[data-view="quiz"] .analystLowerThird em{font-size:7px}
+  body[data-view="quiz"] .options{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:7px;flex:1;min-height:0}
+  body[data-view="quiz"] .option{min-height:0;height:100%;padding:9px 10px;border-radius:11px;align-items:center}
+  body[data-view="quiz"] .optionKey{width:27px;height:27px;min-width:27px;font-size:9px}
+  body[data-view="quiz"] .optionCopy b{font-size:11px;line-height:1.35}
+  body[data-view="quiz"] .optionCopy small{font-size:6px;margin-top:4px}
+  body[data-view="quiz"] .optionIcon{width:25px;height:25px;font-size:11px}
+  body[data-view="quiz"] .questionFoot{min-height:24px;margin-top:6px;font-size:7px}
+  body[data-view="quiz"] .sceneStack{height:100%;min-height:0;overflow:hidden;display:block}
+  body[data-view="quiz"] .sceneCard{height:100%;min-height:0;padding:8px;display:flex;flex-direction:column;gap:6px}
+  body[data-view="quiz"] .observerLoadoutRail{height:42px;min-height:42px;gap:5px}
+  body[data-view="quiz"] .observerLoadoutRail article{padding:4px 6px;min-width:0}
+  body[data-view="quiz"] .observerLoadoutRail img{width:34px;height:28px}
+  body[data-view="quiz"] .observerLoadoutRail small{font-size:5px}
+  body[data-view="quiz"] .observerLoadoutRail b{font-size:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+  body[data-view="quiz"] .observerLoadoutRail span{display:none}
+  body[data-view="quiz"] .sceneHeroWrap{flex:1;min-height:0;aspect-ratio:auto!important;max-height:none!important;border-radius:12px}
+  body[data-view="quiz"] .scenePhoto,body[data-view="quiz"] .sceneTactical{object-fit:contain!important}
+  body[data-view="quiz"] .sceneHud{padding:6px 8px;max-width:70%}
+  body[data-view="quiz"] .sceneHud small{font-size:6px}
+  body[data-view="quiz"] .sceneHud b{font-size:10px}
+  body[data-view="quiz"] .sceneHud span{font-size:6px}
+  body[data-view="quiz"] .killFeedPanel{display:none!important}
+  body[data-view="quiz"] .weaponBar{display:none!important}
+  body[data-view="quiz"] .broadcastMiniStats{height:38px;min-height:38px;gap:5px}
+  body[data-view="quiz"] .broadcastMiniStats div{padding:5px 7px}
+  body[data-view="quiz"] .broadcastMiniStats small{font-size:5px}
+  body[data-view="quiz"] .broadcastMiniStats b{font-size:9px}
+  body[data-view="quiz"] .sceneThumbRow,
+  body[data-view="quiz"] .skinPanel,
+  body[data-view="quiz"] .cosmeticDeck,
+  body[data-view="quiz"] .intelGrid{display:none!important}
+}
+@media (max-width:1079px){
+  body[data-view="quiz"] .options{display:grid;grid-template-columns:1fr;gap:8px}
+  body[data-view="quiz"] .option{min-height:68px}
+  body[data-view="quiz"] .majorTicker,.broadcastHud,.analystStrip{display:none!important}
+}

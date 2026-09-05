@@ -348,26 +348,41 @@ function setRoundTimeline(pack){
  const order=['OPENING','MID','EXEC','CLUTCH'],phase=phaseFromPack(pack),active=order.indexOf(phase);
  document.querySelectorAll('#roundTimeline span').forEach((el,i)=>{el.classList.toggle('done',i<active);el.classList.toggle('active',i===active)});
 }
+const MR12_SCORE_PRESETS=[
+ [0,0],[1,0],[1,1],[2,1],[2,2],[3,2],[3,3],[4,3],[4,4],[5,4],[5,5],[6,5],
+ [6,6],[7,6],[7,7],[8,7],[8,8],[9,8],[9,9],[10,9],[10,10],[11,10],[11,11],[12,11],
+ [11,12],[8,10],[10,8],[6,9],[9,6],[4,7],[7,4],[5,8],[8,5],[3,6],[6,3],[10,11]
+];
 function majorRoundState(pack){
- const round=idx+1;
- const tScore=6+Math.floor((round-1)*0.52)%10;
- const ctScore=5+Math.floor((round-1)*0.43)%10;
- const phase=phaseFromPack(pack);
- const pressure=pressureLabel(pack);
- const win=Math.max(28,Math.min(78,50+(pack.side==='T SIDE'?4:-2)+(pressure==='CRITICAL'?-8:pressure==='HIGH'?-3:3)+(String(pack.alive).startsWith('5V4')?10:String(pack.alive).startsWith('4V5')?-9:0)));
- const impact=(0.92+((idx%9)*0.045)).toFixed(2);
- const clutch=Math.min(96,58+(idx*7)%39);
- return{round,tScore,ctScore,phase,pressure,win,impact,clutch};
+ const pair=MR12_SCORE_PRESETS[idx%MR12_SCORE_PRESETS.length];
+ const tScore=Math.min(12,Math.max(0,pair[0])),ctScore=Math.min(12,Math.max(0,pair[1]));
+ const round=Math.min(24,tScore+ctScore+1);
+ const phase=phaseFromPack(pack),pressure=pressureLabel(pack);
+ const matchPoint=tScore===12||ctScore===12;
+ const half=(tScore+ctScore)<12?'1ST HALF':'2ND HALF';
+ return{round,tScore,ctScore,phase,pressure,matchPoint,half,status:matchPoint?'MATCH POINT':'LIVE · MR12'};
 }
-function renderRoundDots(round){
+function renderRoundDots(ms){
  const root=$('roundDots');if(!root)return;root.innerHTML='';
- for(let i=0;i<12;i++){const s=document.createElement('i');s.className=i<round%12?'won':'';if(i===round%12-1)s.classList.add('current');root.appendChild(s)}
+ const played=ms.tScore+ms.ctScore;let tr=ms.tScore,cr=ms.ctScore,turn=idx%2;
+ const history=[];
+ for(let i=0;i<played;i++){
+  let side;
+  if((turn===0&&tr>0)||cr===0){side='t';tr--}else{side='ct';cr--}
+  history.push(side);turn=1-turn;
+ }
+ for(let i=0;i<24;i++){
+  const s=document.createElement('i');
+  if(i<played)s.className=history[i]==='t'?'tWon':'ctWon';
+  if(i===played&&played<24)s.classList.add('current');
+  root.appendChild(s)
+ }
 }
 function renderQ(){
- const q=QUESTIONS[idx],pct=Math.round(idx/QUESTIONS.length*100),pack=TACTICAL_PACKS[idx%TACTICAL_PACKS.length];
- $('progressText').textContent=`QUESTION ${String(idx+1).padStart(2,'0')} / ${QUESTIONS.length}`;$('progressPct').textContent=pct+'%';$('bar').style.width=pct+'%';$('roundTag').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('sceneTag').textContent=q.scene_en;$('sceneZh').textContent=q.scene_zh+' / '+q.scene_en;$('sceneDesc').textContent='四个选项都可能成立，只代表不同的实战倾向；先读地图，再按第一反应选择。';$('qtext').textContent=q.q;$('backBtn').style.visibility=idx?'visible':'hidden';
+ const q=QUESTIONS[idx],pct=Math.round(idx/QUESTIONS.length*100),pack=TACTICAL_PACKS[idx%TACTICAL_PACKS.length];document.body.dataset.roundSide=pack.side==='T SIDE'?'t':'ct';document.documentElement.style.setProperty('--round-accent',pack.side==='T SIDE'?'#ffb31a':'#62c7ff');
+ $('progressText').textContent=`QUESTION ${String(idx+1).padStart(2,'0')} / ${QUESTIONS.length}`;$('progressPct').textContent=pct+'%';$('bar').style.width=pct+'%';$('roundTag').textContent=`DECISION ${String(idx+1).padStart(2,'0')}`;$('sceneTag').textContent=q.scene_en;$('sceneZh').textContent=q.scene_zh+' / '+q.scene_en;$('sceneDesc').textContent='四个选项都可能成立，只代表不同的实战倾向；先读地图，再按第一反应选择。';$('qtext').textContent=q.q;$('backBtn').style.visibility=idx?'visible':'hidden';
  $('mapTag').textContent=mapCn(pack.mapInfo.map);$('sideTag').textContent=pack.side;$('aliveTag').textContent=pack.alive;$('economyTag').textContent=pack.econ;$('timerTag').textContent=pack.timer;
- $('broadcastRound').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('broadcastClock').textContent=pack.timer;$('broadcastMap').textContent=mapCn(pack.mapInfo.map);$('broadcastTState').textContent=pack.side==='T SIDE'?'YOUR SIDE':'OPPONENT';$('broadcastCTState').textContent=pack.side==='CT SIDE'?'YOUR SIDE':'OPPONENT';const am=parseAlive(pack.alive,pack.side);$('broadcastTAlive').textContent=`${am.t} ALIVE`;$('broadcastCTAlive').textContent=`${am.ct} ALIVE`;$('analystGoal').textContent=pack.goal;$('analystPressure').textContent=pressureLabel(pack);$('analystStructure').textContent=pack.alive;$('analystRead').textContent=primaryRead(pack);setRoundTimeline(pack);const ms=majorRoundState(pack);if($('seriesMap'))$('seriesMap').textContent=`MAP ${1+(idx%3)} / 3`;if($('liveClock'))$('liveClock').textContent=pack.timer;if($('majorMapName'))$('majorMapName').textContent=mapCn(pack.mapInfo.map);if($('majorRoundLabel'))$('majorRoundLabel').textContent=`ROUND ${String(ms.round).padStart(2,'0')} / 36`;if($('majorTimer'))$('majorTimer').textContent=pack.timer;if($('majorTScore'))$('majorTScore').textContent=ms.tScore;if($('majorCTScore'))$('majorCTScore').textContent=ms.ctScore;if($('majorTMoney'))$('majorTMoney').textContent=pack.side==='T SIDE'?pack.econ:'OPP ECON';if($('majorCTMoney'))$('majorCTMoney').textContent=pack.side==='CT SIDE'?pack.econ:'OPP ECON';if($('majorTName'))$('majorTName').textContent=`T · ${am.t} ALIVE`;if($('majorCTName'))$('majorCTName').textContent=`CT · ${am.ct} ALIVE`;renderRoundDots(ms.round);if($('majorTickerText'))$('majorTickerText').textContent=`${mapCn(pack.mapInfo.map)} ${siteCn(pack.mapInfo.site)} · ${pack.alive} · ${pack.goal} · ${pack.state} · ${primaryRead(pack)} READ`;if($('lowerThirdTitle'))$('lowerThirdTitle').textContent=`${mapCn(pack.mapInfo.map)} · ${pack.state}`;if($('lowerThirdMeta'))$('lowerThirdMeta').textContent=`${pack.goal} · ${pressureLabel(pack)} PRESSURE · ${primaryRead(pack)} READ`;const ld=deriveLoadout(pack);if($('impactValue'))$('impactValue').textContent=ld.hp;if($('winProb'))$('winProb').textContent=ld.armor;if($('utilityValue'))$('utilityValue').textContent=ld.weapon;if($('clutchIndex'))$('clutchIndex').textContent=ld.utility;
+ $('broadcastRound').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('broadcastClock').textContent=pack.timer;$('broadcastMap').textContent=mapCn(pack.mapInfo.map);$('broadcastTState').textContent=pack.side==='T SIDE'?'YOUR SIDE':'OPPONENT';$('broadcastCTState').textContent=pack.side==='CT SIDE'?'YOUR SIDE':'OPPONENT';const am=parseAlive(pack.alive,pack.side);$('broadcastTAlive').textContent=`${am.t} ALIVE`;$('broadcastCTAlive').textContent=`${am.ct} ALIVE`;$('analystGoal').textContent=pack.goal;$('analystPressure').textContent=pressureLabel(pack);$('analystStructure').textContent=pack.alive;$('analystRead').textContent=primaryRead(pack);setRoundTimeline(pack);const ms=majorRoundState(pack);if($('broadcastRound'))$('broadcastRound').textContent=`ROUND ${String(ms.round).padStart(2,'0')}`;if($('seriesMap'))$('seriesMap').textContent='FIRST TO 13';if($('liveClock'))$('liveClock').textContent=pack.timer;if($('majorMapName'))$('majorMapName').textContent=mapCn(pack.mapInfo.map);if($('majorRoundLabel'))$('majorRoundLabel').textContent=`${ms.status} · ROUND ${String(ms.round).padStart(2,'0')}`;if($('majorTimer'))$('majorTimer').textContent=pack.timer;if($('majorTScore'))$('majorTScore').textContent=ms.tScore;if($('majorCTScore'))$('majorCTScore').textContent=ms.ctScore;if($('majorTMoney'))$('majorTMoney').textContent=`${am.t} ALIVE · ${pack.side==='T SIDE'?pack.econ:'OPP ECON'}`;if($('majorCTMoney'))$('majorCTMoney').textContent=`${am.ct} ALIVE · ${pack.side==='CT SIDE'?pack.econ:'OPP ECON'}`;if($('majorTName'))$('majorTName').textContent=`T · ${pack.side==='T SIDE'?'YOUR SIDE':'OPPONENT'}`;if($('majorCTName'))$('majorCTName').textContent=`CT · ${pack.side==='CT SIDE'?'YOUR SIDE':'OPPONENT'}`;renderRoundDots(ms);if($('majorTickerText'))$('majorTickerText').textContent=`${mapCn(pack.mapInfo.map)} · ${siteCn(pack.mapInfo.site)} · ${pack.alive} · ${pack.goal} · ${ms.half}${ms.matchPoint?' · 赛点局':''}`;if($('lowerThirdTitle'))$('lowerThirdTitle').textContent=`${mapCn(pack.mapInfo.map)} · ${pack.state}`;if($('lowerThirdMeta'))$('lowerThirdMeta').textContent=`${pack.goal} · ${pressureLabel(pack)} PRESSURE · ${primaryRead(pack)} READ`;const ld=deriveLoadout(pack);if($('impactValue'))$('impactValue').textContent=ld.hp;if($('winProb'))$('winProb').textContent=ld.armor;if($('utilityValue'))$('utilityValue').textContent=ld.weapon;if($('clutchIndex'))$('clutchIndex').textContent=ld.utility;
  $('scenarioChipMap').textContent=mapDisplay(pack.mapInfo.map,pack.mapInfo.site);$('scenarioChipAlive').textContent=pack.alive;$('scenarioChipGoal').textContent=pack.goal;$('scenarioLead').textContent=`${pack.side} · ${pack.econ} · 剩余时间 ${pack.timer}`;$('scenarioKnown').textContent='已知信息：'+pack.known;$('scenarioFocus').textContent='判断重点：'+pack.focus;
  $('sceneMapMicro').textContent=`${mapCn(pack.mapInfo.map)} // ${siteCn(pack.mapInfo.site)}`;$('sceneState').textContent=pack.state;$('sceneSubline').textContent=pack.subline;$('radarMapName').textContent=mapDisplay(pack.mapInfo.map,pack.mapInfo.site);$('intelTitle').textContent=`${mapCn(pack.mapInfo.map)} · ${siteCn(pack.mapInfo.site)} · ${pack.goal}`;$('thumbALabel').textContent='官方小地图 · '+mapCn(pack.mapInfo.map);$('thumbBLabel').textContent='战术标注 · '+siteCn(pack.mapInfo.site);
  $('scenePhoto').src=hdMapImagePath(pack.mapInfo.map);$('sceneArt').src=overlayImage(pack);setMapFocus(idx);const tb=$('tacticalBoard');if(tb)tb.innerHTML='';$('sceneThumbA').src=hdMapImagePath(pack.mapInfo.map);$('sceneThumbB').src=focusV19Image(pack);pack.skins.forEach((s,n)=>{let img=$('skinQuiz'+(n+1)),lab=$('skinQuizLabel'+(n+1));if(img)applySkinAsset(img,s);if(lab)lab.textContent=s.name;});
@@ -461,7 +476,7 @@ function mapScene(scene,variant='main'){return hdMapImagePath(scene.mapInfo.map)
 function mapThumb(scene,label){return label==='关键区域'?focusV19Image(scene):hdMapImagePath(scene.mapInfo.map)}
 function applyDirectAsset(img,url,fallback){if(!img)return;img.onerror=()=>{img.onerror=null;if(fallback&&fallback!==url)img.src=fallback};img.src=url}
 function applySkinAsset(img,item){if(!img||!item)return;const url=SKIN_ASSETS[item.name];if(url){img.onerror=()=>{img.onerror=null;img.src=skinCardUri(item,'mini')};img.src=url}else img.src=skinCardUri(item,'mini')}
-window.addEventListener('load',()=>{
+window.addEventListener('load',()=>{try{history.scrollRestoration='manual'}catch(e){};if(!location.hash)window.scrollTo(0,0);
  const p=safeRead('rounddna_v4_progress');if(p&&Array.isArray(p.answers)&&p.answers.length)$('resumeQuizBtn').hidden=false;
  const heroPack=TACTICAL_PACKS[0],heroPack2=TACTICAL_PACKS[1],heroPack3=TACTICAL_PACKS[2];
  $('heroPhoto').src=hdMapImagePath(heroPack.mapInfo.map);$('heroArt').src=overlayImage(heroPack);$('heroStageMap').textContent='幻影迷城 · A包点 / REAL MAP OBSERVER';
@@ -470,5 +485,5 @@ window.addEventListener('load',()=>{
  $('heroMapLabel1').textContent='幻影迷城 · A包点';$('heroMapLabel2').textContent='炼狱小镇 · B点';$('heroMapLabel3').textContent='炙热沙城Ⅱ · 中路';
  $('heroMapHint1').textContent='高清原图 / 小型 Observer 标记';$('heroMapHint2').textContent='真实 callout / 回防阅读';$('heroMapHint3').textContent='地图本体优先 / 不遮挡';
  PLAYERS.slice(0,6).forEach((p,i)=>{let img=document.querySelector(`[data-peak-preview="${i}"]`);if(img)loadPeakImage(img,p)});
- if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js?v=21.0').catch(()=>{})
+ if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js?v=22.0').catch(()=>{})
 });

@@ -1,4 +1,4 @@
-ROUND//DNA V21 third-party visual references
+ROUND//DNA V22 third-party visual references
 
 Map callout images: existing project map assets sourced from community callout-map references used in earlier versions.
 Skin display image sources referenced at runtime include specs.gg skin image directories plus selected public web image/CDN references for fallback/visual display.

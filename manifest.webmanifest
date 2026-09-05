@@ -1,0 +1,22 @@
+{
+  "name": "ROUND//DNA · CS职业选手原型测试 V4",
+  "short_name": "ROUND//DNA",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05080c",
+  "theme_color": "#080b0f",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "description": "36道CS实战题，匹配职业选手打法原型与代表巅峰期。"
+}

@@ -494,3 +494,65 @@ body[data-view="quiz"]{background:radial-gradient(900px 480px at 2% -5%,rgba(255
 
 @media(max-width:1120px){.majorScoreboard{grid-template-columns:1fr 220px 1fr}.questionCard{position:relative;top:auto;max-height:none;overflow:visible}.sceneHeroWrap{max-height:none!important}.majorBroadcastHead{grid-template-columns:1fr auto auto}}
 @media(max-width:760px){.majorBroadcastHead{grid-template-columns:1fr auto}.seriesState{display:none}.majorBrand b{font-size:10px}.majorScoreboard{grid-template-columns:1fr 112px 1fr}.teamPanel{padding:9px 8px;gap:6px}.teamLogo{width:28px;height:28px;font-size:9px}.teamPanel small{display:none}.teamPanel b{font-size:9px}.teamPanel span{font-size:6px}.teamPanel strong{font-size:23px}.roundCenter{padding:7px 5px}.roundCenter small{font-size:6px}.roundCenter b{font-size:7px}.roundCenter>span{font-size:13px}.roundDots{gap:2px}.majorTicker{grid-template-columns:auto 1fr}.majorTicker b{display:none}.analystLowerThird{grid-template-columns:auto 1fr}.analystLowerThird em{display:none}.broadcastMiniStats{grid-template-columns:1fr 1fr}.questionCard{position:relative;top:auto;max-height:none;overflow:visible}.sceneHeroWrap{max-height:none!important}.miniRadar{height:240px!important}}
+
+/* =========================================================
+   V19 · REAL MAP OBSERVER + REAL INVENTORY
+   ========================================================= */
+:root{--v19Orange:#ffae1a;--v19Blue:#55bfff;--v19Panel:#081018}
+.heroPhoto,.scenePhoto{display:block!important;position:absolute;inset:0;width:100%;height:100%;object-fit:contain!important;object-position:center;background:#030609;filter:saturate(1.02) contrast(1.03) brightness(.96)!important;z-index:0}
+.heroOverlayMap,.sceneTactical{display:block!important;position:absolute;inset:0;width:100%;height:100%;object-fit:contain!important;object-position:center;z-index:2;pointer-events:none;filter:none!important;opacity:1!important;mix-blend-mode:normal!important}
+.tacticalBoard{display:none!important}
+.visualShade,.sceneOverlay{display:block!important;pointer-events:none;z-index:1;background:radial-gradient(circle at 50% 48%,transparent 58%,rgba(2,5,8,.22) 100%)!important}
+.heroStage,.sceneHeroWrap{background:#030609!important}
+.heroStage{aspect-ratio:1/1;min-height:0!important}
+.sceneHeroWrap{aspect-ratio:1/1;max-height:540px!important;min-height:0!important}
+.sceneHud{z-index:4!important;max-width:57%;background:rgba(3,7,11,.78)!important;border:1px solid rgba(255,255,255,.08)!important;backdrop-filter:blur(10px)}
+.weaponBar{z-index:4!important}
+
+.observerLoadoutRail{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:8px}
+.observerLoadoutRail article{display:grid;grid-template-columns:68px 1fr;align-items:center;gap:8px;min-height:66px;padding:7px 9px;border:1px solid rgba(255,255,255,.065);border-radius:8px;background:linear-gradient(180deg,#0c141c,#071018);overflow:hidden;position:relative}
+.observerLoadoutRail article:before{content:attr(data-role);position:absolute;right:6px;top:4px;color:rgba(255,255,255,.035);font:900 30px/1 monospace}
+.observerLoadoutRail article>small{position:absolute;top:7px;right:8px;color:#6f8494;font:800 6px monospace;letter-spacing:.14em}
+.observerLoadoutRail img{width:68px;height:54px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.35));background:radial-gradient(circle,rgba(255,255,255,.045),transparent 70%)}
+.observerLoadoutRail b{display:block;font-size:9px;line-height:1.4;color:#eef3f7;padding-right:4px}
+.observerLoadoutRail span{display:block;margin-top:4px;color:#ffb31a;font:800 6px monospace;letter-spacing:.11em}
+
+.skinPanel{background:linear-gradient(180deg,#0b1219,#071018)!important;border-color:rgba(255,255,255,.06)!important}
+.skinStrip{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:7px!important}
+.skinMini{padding:7px!important;border-radius:8px!important;background:linear-gradient(180deg,#101820,#080f15)!important;min-width:0}
+.skinMini img{width:100%!important;height:70px!important;aspect-ratio:auto!important;object-fit:contain!important;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.055),transparent 72%)!important;border:0!important;filter:drop-shadow(0 8px 8px rgba(0,0,0,.35))}
+.skinMini b{font-size:8px!important;line-height:1.35!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.skinMini span{font-size:7px!important;line-height:1.35!important}
+.skinCard img{object-fit:contain!important;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.06),transparent 70%)!important;filter:drop-shadow(0 10px 12px rgba(0,0,0,.32));padding:7px}
+
+.cosmeticDeck{grid-template-columns:1.08fr 1fr .92fr!important}
+.cosmeticCard{min-height:150px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0c141c,#071018)!important}
+.cosmeticRealImage,.cosmeticAgentImage{display:block;width:100%;height:88px;object-fit:contain;margin:0 0 8px;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.055),transparent 72%);filter:drop-shadow(0 10px 12px rgba(0,0,0,.34))}
+.cosmeticAgentImage{height:116px;object-fit:contain;object-position:center bottom;margin-top:-12px}
+.cosmeticCard b{position:relative;z-index:2;font-size:10px!important}
+.cosmeticCard span{position:relative;z-index:2;font-size:8px!important}
+.trophyCard{background:radial-gradient(180px 100px at 80% 20%,rgba(255,179,26,.09),transparent 70%),linear-gradient(180deg,#0c141c,#071018)!important}
+
+.heroStageInfo{z-index:4!important;background:linear-gradient(90deg,rgba(3,7,11,.88),rgba(3,7,11,.58))!important}
+.heroMapBadge{z-index:4!important}
+.heroMapMini img{object-fit:cover!important;filter:saturate(1.02) contrast(1.03)}
+
+/* cleaner map area, fewer overlapping broadcast widgets */
+.sceneCard .killFeedPanel,.sceneCard .sceneCross{display:none!important}
+.sceneCard .weaponBar{left:12px;right:auto;bottom:10px;max-width:58%}
+.broadcastMiniStats{margin-top:7px}
+
+@media(max-width:1180px){
+ .observerLoadoutRail{grid-template-columns:1fr 1fr 1fr}
+ .sceneHeroWrap{max-height:none!important;max-width:720px!important}
+}
+@media(max-width:760px){
+ .observerLoadoutRail{grid-template-columns:1fr 1fr}
+ .observerLoadoutRail article:nth-child(3){grid-column:1/-1}
+ .observerLoadoutRail article{grid-template-columns:58px 1fr;min-height:58px}
+ .observerLoadoutRail img{width:58px;height:46px}
+ .sceneHud{max-width:72%}
+ .skinStrip{grid-template-columns:1fr 1fr!important}
+ .cosmeticDeck{grid-template-columns:1fr!important}
+ .cosmeticCard{min-height:130px}
+}

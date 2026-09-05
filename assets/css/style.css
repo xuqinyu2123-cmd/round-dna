@@ -28,3 +28,88 @@
 @media(max-width:1100px){.arsenalGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:960px){.skinStrip{grid-template-columns:1fr}.arsenalGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.arsenalRail{padding:12px}.arsenalGrid{grid-template-columns:1fr;gap:8px}.skinCard{grid-template-columns:92px 1fr;padding:7px}.skinMini{grid-template-columns:84px 1fr;padding:7px}.skinCard b,.skinMini b{font-size:11px}}
+
+/* V8 tactical board refinement */
+.heroPhoto,.scenePhoto{display:none!important}
+.heroOverlayMap,.sceneTactical{mix-blend-mode:normal!important;opacity:1!important;filter:none!important}
+.heroCard{grid-template-columns:1fr .96fr;min-height:640px}
+.heroVisual{background:linear-gradient(180deg,#081019,#0a1118)}
+.heroVisual>img{filter:none!important}
+.heroMapStrip .heroMapMini img{height:108px;object-fit:cover}
+.quizGrid{grid-template-columns:minmax(0,1.04fr) minmax(450px,.96fr);gap:16px;align-items:start}
+.questionCard{padding:24px 22px;background:linear-gradient(180deg,#0b1117,#091018)}
+.questionScene{margin-bottom:10px}.questionScene small{font-size:11px;line-height:1.6}
+.scenarioBox{padding:14px 15px;margin-bottom:18px;background:linear-gradient(180deg,#0d151e,#0a1016)}
+.questionCard h2{font-size:28px;line-height:1.42;margin:0 0 18px;letter-spacing:-.02em}
+.sceneStack{gap:12px}
+.sceneCard{padding:12px;border-radius:22px;background:linear-gradient(180deg,#0b1117,#081018)}
+.sceneHeroWrap{min-height:500px;border-radius:18px;background:#060c11;border:1px solid rgba(255,255,255,.07)}
+.sceneHeroWrap>img{object-fit:cover;filter:none!important}
+.sceneOverlay{background:linear-gradient(180deg,rgba(7,11,16,.02),rgba(7,11,16,.06))!important}
+.sceneHud{left:14px;top:14px;right:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:11px 12px;border-radius:14px;background:rgba(6,10,14,.72)}
+.sceneHud small,.sceneHud span{display:block}
+.killFeedPanel{display:none!important}
+.sceneCross{display:none!important}
+.weaponBar{left:14px;right:14px;bottom:12px;display:flex;justify-content:flex-start;gap:8px;flex-wrap:wrap}
+.weaponBar span{padding:7px 10px;background:rgba(6,10,14,.84);border-color:rgba(255,255,255,.08);font-size:8px}
+.sceneThumbRow{grid-template-columns:1fr 1fr;gap:10px}
+.thumbCard{grid-template-columns:1fr;min-height:152px;padding:8px 8px 10px;gap:8px}
+.thumbCard img{width:100%;height:112px;border-radius:12px;object-fit:cover}
+.thumbCard b{font-size:14px;line-height:1.5}.thumbCard small{font-size:8px}
+.skinStrip{display:none!important}
+.intelGrid{grid-template-columns:1fr;gap:10px}
+.radarCard{display:none!important}
+.intelCard{padding:14px 14px 12px;border-radius:18px}
+.intelList li{font-size:11px;line-height:1.7;padding:11px 12px 11px 32px}
+.arsenalRail{padding:15px 16px;background:linear-gradient(180deg,#0b1117,#081018)}
+.arsenalGrid{grid-template-columns:repeat(4,1fr);gap:10px}
+.skinCard{grid-template-columns:92px 1fr;min-height:96px}
+.skinCard img{height:100%}
+@media(max-width:1100px){.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{min-height:440px}}
+@media(max-width:700px){.questionCard{padding:16px 12px}.questionCard h2{font-size:24px}.sceneHeroWrap{min-height:300px}.sceneThumbRow{grid-template-columns:1fr}.arsenalGrid{grid-template-columns:1fr 1fr}.thumbCard{min-height:132px}.thumbCard img{height:96px}}
+
+/* V9 real map radar refinement */
+.heroCard{grid-template-columns:1fr .98fr;min-height:660px}
+.heroCopy h1{font-size:clamp(46px,5.7vw,72px)}
+.heroCopy p{max-width:650px}
+.heroVisual{background:linear-gradient(180deg,#061019,#0a1016)}
+.heroMapBadge{background:rgba(6,10,14,.84)!important;border:1px solid rgba(255,255,255,.08)!important}
+.heroStageInfo{background:rgba(6,10,14,.80)!important;border:1px solid rgba(255,255,255,.08)!important}
+.heroMapStrip{gap:10px}
+.heroMapMini{background:linear-gradient(180deg,#0c151d,#081018)!important}
+.quizGrid{grid-template-columns:minmax(0,1.02fr) minmax(470px,.98fr);gap:18px;align-items:start}
+.questionCard{padding:24px 22px;background:linear-gradient(180deg,#0c1218,#091018)}
+.questionScene{margin-bottom:12px}
+.questionScene small{font-size:11px;line-height:1.7}
+.scenarioBox{padding:16px;background:linear-gradient(180deg,#101924,#0a1118);border-color:rgba(255,255,255,.06)}
+.scenarioMeta span{font-size:9px;padding:8px 10px}
+.scenarioBox p{font-size:13px;line-height:1.8}
+.scenarioFacts span{font-size:11px;line-height:1.7;background:#0c131b}
+.questionCard h2{font-size:30px;line-height:1.4;margin-bottom:18px}
+.option{padding:14px 14px;background:linear-gradient(180deg,#172231,#111a24)}
+.optionCopy b{font-size:14px}
+.sceneCard{padding:12px;border-radius:22px;background:linear-gradient(180deg,#0b1117,#081018)}
+.sceneHeroWrap{min-height:530px;background:#060d12;border:1px solid rgba(255,255,255,.07);border-radius:18px}
+.sceneHud{left:14px;top:14px;right:14px;padding:10px 12px;border-radius:14px;background:rgba(6,10,14,.78)}
+.sceneHud b{font-size:20px}
+.sceneHud small{font-size:10px;letter-spacing:.16em}
+.sceneHud span{font-size:10px;color:#93a7b7}
+.killFeedPanel{display:none!important}
+.weaponBar{left:14px;right:14px;bottom:12px;gap:8px}
+.weaponBar span{padding:7px 10px;background:rgba(6,10,14,.86);border-color:rgba(255,255,255,.10);font-size:8px}
+.sceneThumbRow{grid-template-columns:1fr 1fr;gap:10px}
+.thumbCard{grid-template-columns:1fr;min-height:156px;padding:9px;gap:8px;background:linear-gradient(180deg,#0e1620,#0a1016)}
+.thumbCard img{height:114px;object-fit:cover;border-radius:12px}
+.thumbCard small{font-size:8px;color:#ffad19}
+.thumbCard b{font-size:13px;line-height:1.5}
+.intelGrid{grid-template-columns:1fr;gap:10px}
+.intelCard{padding:14px;background:linear-gradient(180deg,#0d151e,#091018)}
+.intelList li{font-size:11px;line-height:1.75}
+.radarCard{display:none!important}
+.arsenalRail{padding:15px 16px;background:linear-gradient(180deg,#0c1218,#081018)}
+.arsenalGrid{grid-template-columns:repeat(4,1fr);gap:10px}
+.skinCard{grid-template-columns:90px 1fr;min-height:100px}
+.skinCard img{height:100%}
+.skinStrip{display:none!important}
+@media(max-width:1120px){.quizGrid{grid-template-columns:1fr}.sceneHeroWrap{min-height:460px}}
+@media(max-width:700px){.questionCard{padding:16px 12px}.questionCard h2{font-size:24px}.sceneHeroWrap{min-height:310px}.sceneThumbRow{grid-template-columns:1fr}.arsenalGrid{grid-template-columns:1fr 1fr}.thumbCard{min-height:132px}.thumbCard img{height:94px}}

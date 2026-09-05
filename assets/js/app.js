@@ -71,30 +71,171 @@ function skinCardUri(item,size='wide'){
 function esc(v){return String(v||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function svgUri(svg){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)}
 
-function mapScene(scene,variant='main'){
- const m=scene.mapInfo,accent=m.accent,bg2=m.accent2,w=variant==='hero'?1400:(variant==='thumb'?760:1100),h=variant==='hero'?900:(variant==='thumb'?430:760);
- const isThumb=variant==='thumb';
- const labelSize=isThumb?15:18;
- const labelY=isThumb?282:428;
- const labels=(isThumb?m.zones.slice(0,3):m.zones).map((z,i)=>`<g><rect x="${70+(i%3)*170}" y="${labelY+Math.floor(i/3)*82}" width="140" height="42" rx="12" fill="rgba(5,9,13,.76)" stroke="rgba(255,255,255,.08)"/><text x="${140+(i%3)*170}" y="${labelY+27+Math.floor(i/3)*82}" text-anchor="middle" fill="#eef3f7" font-family="monospace" font-size="${labelSize}" font-weight="800">${esc(z)}</text></g>`).join('');
- const tMarks=isThumb?[[120,210,'T1'],[200,182,'T2'],[252,238,'T3']]:[[130,230,'T1'],[220,200,'T2'],[290,270,'T3']];
- const ctMarks=isThumb?[[556,150,'CT1'],[610,190,'CT2']]:[[820,190,'CT1'],[900,250,'CT2']];
- const mark=(arr,color)=>arr.map(([x,y,l])=>`<g><circle cx="${x}" cy="${y}" r="${isThumb?17:20}" fill="${color}" opacity=".9"/><circle cx="${x}" cy="${y}" r="${isThumb?28:34}" fill="none" stroke="${color}" opacity=".35"/><text x="${x}" y="${y+5}" text-anchor="middle" fill="#071018" font-family="monospace" font-size="${isThumb?10:12}" font-weight="900">${l}</text></g>`).join('');
- const smoke=isThumb?`<g opacity=".75"><circle cx="458" cy="232" r="34" fill="#d0d8de" opacity=".18"/><circle cx="490" cy="252" r="22" fill="#d0d8de" opacity=".14"/><text x="434" y="216" fill="#d0d8de" font-family="monospace" font-size="13" font-weight="800">SMOKE</text></g>`:`<g opacity=".75"><circle cx="620" cy="336" r="46" fill="#d0d8de" opacity=".18"/><circle cx="664" cy="360" r="30" fill="#d0d8de" opacity=".14"/><text x="586" y="314" fill="#d0d8de" font-family="monospace" font-size="16" font-weight="800">SMOKE</text></g>`;
- const bomb=scene.goal.includes('POST')||scene.goal.includes('AFTER')? (isThumb?`<g><rect x="600" y="260" width="54" height="34" rx="8" fill="${accent}" opacity=".25" stroke="${accent}"/><text x="627" y="282" text-anchor="middle" fill="#eef3f7" font-family="monospace" font-size="15" font-weight="900">BOMB</text></g>`:`<g><rect x="930" y="402" width="78" height="42" rx="12" fill="${accent}" opacity=".25" stroke="${accent}"/><text x="969" y="429" text-anchor="middle" fill="#eef3f7" font-family="monospace" font-size="18" font-weight="900">BOMB</text></g>`) : '';
- const cross=isThumb?`<circle cx="620" cy="208" r="34" fill="none" stroke="${accent}" stroke-width="3"/><path d="M620 176V240M588 208H652" stroke="${accent}" stroke-width="3" stroke-linecap="round"/>`:`<circle cx="892" cy="294" r="40" fill="none" stroke="${accent}" stroke-width="3"/><path d="M892 256V332M854 294H930" stroke="${accent}" stroke-width="3" stroke-linecap="round"/>`;
- const route=isThumb?`<path d="M104 236 C 208 208, 278 208, 364 216 S 502 208, 604 178" stroke="${accent}" stroke-width="5" stroke-linecap="round" fill="none" stroke-dasharray="10 10"/>`:`<path d="M126 264 C 270 232, 396 236, 520 252 S 718 244, 860 204" stroke="${accent}" stroke-width="6" stroke-linecap="round" fill="none" stroke-dasharray="12 12"/>`;
- const support=isThumb?`<path d="M176 128 C 256 170, 344 184, 432 188 S 562 208, 670 244" stroke="#5cbcff" stroke-width="4" stroke-linecap="round" fill="none" stroke-dasharray="10 12" opacity=".62"/>`:`<path d="M208 152 C 332 212, 448 230, 560 234 S 754 258, 920 320" stroke="#5cbcff" stroke-width="4" stroke-linecap="round" fill="none" stroke-dasharray="10 12" opacity=".62"/>`;
- const overlay=isThumb?`<rect x="22" y="22" width="${w-44}" height="${h-44}" rx="24" fill="none" stroke="rgba(255,255,255,.12)"/>`:`<rect x="34" y="34" width="${w-68}" height="${h-68}" rx="28" fill="none" stroke="rgba(255,255,255,.12)"/>`;
- const subtitle=variant==='hero'?'地图原图 + 人物站位 + 残局思路':scene.shortLead;
- const headSize=variant==='hero'?116:(isThumb?66:98);
- const titleBoxX=isThumb?470:776,titleBoxW=isThumb?248:306,titleBoxH=isThumb?104:128;
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071018"/><stop offset=".55" stop-color="#0a1520"/><stop offset="1" stop-color="${bg2}"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="rgba(255,255,255,.04)"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)" opacity=".65"/><rect width="100%" height="100%" fill="url(#grid)" opacity=".55"/>${overlay}<circle cx="${w*0.82}" cy="${h*0.18}" r="${variant==='hero'?170:120}" fill="${accent}" opacity=".08"/><circle cx="${w*0.18}" cy="${h*0.74}" r="${variant==='hero'?140:100}" fill="#5cbcff" opacity=".08"/><text x="${isThumb?30:44}" y="${isThumb?46:62}" fill="${accent}" font-family="monospace" font-size="${isThumb?15:20}" font-weight="900">ROUND//DNA · ${esc(m.map)} · ${esc(scene.goal)}</text><text x="${isThumb?34:58}" y="${variant==='hero'?160:(isThumb?128:152)}" fill="rgba(255,255,255,.11)" font-family="Arial,sans-serif" font-size="${headSize}" font-weight="900">${esc(m.map)}</text><text x="${isThumb?34:60}" y="${variant==='hero'?214:(isThumb?162:196)}" fill="#eef3f7" font-family="Arial,sans-serif" font-size="${variant==='hero'?24:(isThumb?18:22)}" font-weight="800">${esc(m.site)} · ${esc(scene.state)}</text><text x="${isThumb?34:60}" y="${variant==='hero'?244:(isThumb?188:226)}" fill="#9bb0be" font-family="Arial,sans-serif" font-size="${variant==='hero'?16:14}" font-weight="600">${esc(subtitle)}</text><rect x="${titleBoxX}" y="${isThumb?104:156}" width="${titleBoxW}" height="${titleBoxH}" rx="18" fill="rgba(6,10,14,.76)" stroke="rgba(255,255,255,.08)"/><text x="${titleBoxX+18}" y="${isThumb?132:186}" fill="#8ea4b5" font-family="monospace" font-size="${isThumb?14:17}" font-weight="800">TACTICAL VIEW</text><text x="${titleBoxX+18}" y="${isThumb?162:220}" fill="${accent}" font-family="Arial,sans-serif" font-size="${isThumb?22:30}" font-weight="900">${esc(scene.alive)} · ${esc(scene.side)}</text><text x="${titleBoxX+18}" y="${isThumb?186:248}" fill="#eef3f7" font-family="monospace" font-size="${isThumb?13:15}" font-weight="800">${esc(scene.timer)} · ${esc(scene.econ)}</text><rect x="${isThumb?74:92}" y="${isThumb?168:240}" width="${isThumb?334:430}" height="${isThumb?82:118}" rx="22" fill="rgba(6,10,14,.66)" stroke="rgba(255,255,255,.08)"/><text x="${isThumb?96:116}" y="${isThumb?196:278}" fill="#eef3f7" font-family="Arial,sans-serif" font-size="${isThumb?22:32}" font-weight="900">${esc(scene.goal)}</text><text x="${isThumb?96:116}" y="${isThumb?220:308}" fill="${accent}" font-family="monospace" font-size="${isThumb?12:15}" font-weight="800">${esc(scene.subline)}</text>${route}${support}${labels}${mark(tMarks,accent)}${mark(ctMarks,'#5cbcff')}${smoke}${bomb}${cross}<text x="${isThumb?656:940}" y="${isThumb?386:628}" fill="rgba(255,255,255,.11)" font-family="monospace" font-size="${isThumb?96:154}" font-weight="900">A</text><text x="${isThumb?536:1088}" y="${isThumb?408:700}" fill="rgba(92,188,255,.10)" font-family="monospace" font-size="${isThumb?78:126}" font-weight="900">B</text></svg>`;
+
+
+const MAP_LAYOUTS={
+ 'MIRAGE':{
+   key:'MIRAGE',site:'A SITE',siteMark:'A',base:'#5f6a75',line:'#8ea1b1',hint:'Palace / Ramp / Jungle',hero:'Mirage · A Split',
+   areas:[
+     {pts:'60,542 170,542 210,505 210,425 154,396 92,420 60,470',kind:'spawn',label:'T SPAWN',lx:132,ly:485},
+     {pts:'236,132 388,132 420,172 420,228 346,236 286,214 236,170',kind:'lane',label:'PALACE',lx:326,ly:184},
+     {pts:'228,336 404,336 442,374 430,446 314,470 230,430',kind:'lane',label:'RAMP',lx:330,ly:406},
+     {pts:'446,334 520,324 552,360 540,430 470,446 430,398',kind:'cover',label:'TETRIS',lx:488,ly:387},
+     {pts:'560,248 716,230 788,296 780,392 674,438 564,406 534,322',kind:'site',label:'A SITE',lx:660,ly:336},
+     {pts:'742,144 896,144 930,186 920,248 760,250 724,202',kind:'def',label:'JUNGLE',lx:826,ly:198},
+     {pts:'732,262 838,258 856,330 770,358 714,318',kind:'def',label:'STAIRS',lx:786,ly:307},
+     {pts:'844,338 936,338 958,420 878,454 816,410',kind:'def',label:'CT',lx:890,ly:397},
+     {pts:'590,132 704,132 728,182 680,226 590,206 568,166',kind:'lane',label:'CONNECTOR',lx:650,ly:176}
+   ],
+   tSpots:[[304,188],[298,406],[488,392],[138,490]],ctSpots:[[824,198],[782,304],[892,394]],bomb:[646,330],smokes:[[732,294,'STAIRS SMOKE'],[790,330,'JUNGLE SMOKE']],flash:[560,286,'POP FLASH'],routes:[[[138,492],[232,448],[310,410],[434,386],[556,348],[646,332]],[[300,188],[410,216],[500,248],[586,284]]],thumbs:['PALACE DEFAULT','RAMP SWING','POST-PLANT CROSS']
+ },
+ 'INFERNO':{
+   key:'INFERNO',site:'B SITE',siteMark:'B',base:'#655e57',line:'#8ea1b1',hint:'Car / Coffins / CT',hero:'Inferno · Banana',
+   areas:[
+     {pts:'64,538 182,538 214,498 214,440 154,412 92,438 64,480',kind:'spawn',label:'T SPAWN',lx:138,ly:485},
+     {pts:'226,354 458,338 518,372 520,432 422,466 268,454 214,404',kind:'lane',label:'BANANA',lx:358,ly:404},
+     {pts:'492,336 554,334 574,384 534,422 476,392',kind:'cover',label:'CAR',lx:523,ly:382},
+     {pts:'578,308 662,302 686,362 636,408 568,376',kind:'cover',label:'SAND BAGS',lx:624,ly:356},
+     {pts:'680,230 844,220 896,282 894,382 798,426 682,404 648,316',kind:'site',label:'B SITE',lx:780,ly:326},
+     {pts:'858,222 944,220 958,278 908,312 850,286',kind:'def',label:'COFFINS',lx:905,ly:263},
+     {pts:'822,350 954,350 954,446 846,466 796,422',kind:'def',label:'CT',lx:886,ly:406},
+     {pts:'716,144 878,142 900,190 846,232 730,226 694,180',kind:'def',label:'CONSTRUCTION',lx:798,ly:186},
+     {pts:'648,172 716,170 726,222 660,228 632,196',kind:'cover',label:'NEW BOX',lx:678,ly:200}
+   ],
+   tSpots:[[278,396],[350,394],[430,390],[140,492]],ctSpots:[[902,266],[872,404],[780,188]],bomb:[756,328],smokes:[[640,372,'CT SMOKE'],[580,356,'COFFINS']],flash:[618,288,'BANANA FLASH'],routes:[[[142,492],[236,446],[324,404],[446,390],[596,362]],[[596,362],[680,346],[752,328]]],thumbs:['BANANA TAKE','B RETAKE','COFFINS SPLIT']
+ },
+ 'NUKE':{
+   key:'NUKE',site:'UPPER',siteMark:'A',base:'#546577',line:'#96acc0',hint:'Squeaky / Heaven / Hut',hero:'Nuke · Upper',
+   areas:[
+     {pts:'72,420 252,420 276,470 262,558 98,564 62,500',kind:'spawn',label:'LOBBY',lx:164,ly:494},
+     {pts:'292,300 386,296 394,438 314,454 272,378',kind:'lane',label:'SQUEAKY',lx:334,ly:376},
+     {pts:'418,246 526,246 540,362 432,374 404,304',kind:'lane',label:'HUT',lx:474,ly:309},
+     {pts:'490,240 716,236 738,418 492,430',kind:'site',label:'A SITE',lx:612,ly:336},
+     {pts:'582,128 770,126 786,206 596,216 562,170',kind:'def',label:'RAFTERS',lx:676,ly:170},
+     {pts:'776,128 908,128 920,206 792,214 764,166',kind:'def',label:'HEAVEN',lx:842,ly:170},
+     {pts:'296,138 396,138 400,210 318,226 276,184',kind:'lane',label:'MINI',lx:340,ly:182},
+     {pts:'138,226 272,224 284,344 158,354 116,286',kind:'lane',label:'MAIN',lx:200,ly:286},
+     {pts:'560,468 650,464 652,548 564,552',kind:'cover',label:'VENT',lx:608,ly:512}
+   ],
+   tSpots:[[172,286],[174,492],[334,374],[476,308]],ctSpots:[[668,170],[840,172],[616,336]],bomb:[586,328],smokes:[[338,342,'SQUEAKY SMOKE'],[494,334,'HUT SMOKE']],flash:[586,264,'ENTRY'],routes:[[[176,492],[256,450],[336,394],[458,336]],[[170,288],[258,286],[344,290],[448,300]]],thumbs:['UPPER EXEC','HEAVEN HOLD','VENT DROP']
+ },
+ 'ANCIENT':{
+   key:'ANCIENT',site:'A SITE',siteMark:'A',base:'#596753',line:'#97b18f',hint:'Donut / Temple / Cave',hero:'Ancient · Mid to A',
+   areas:[
+     {pts:'58,542 170,542 206,502 206,444 144,418 86,440 58,486',kind:'spawn',label:'T SPAWN',lx:132,ly:488},
+     {pts:'206,334 372,324 404,384 366,452 246,452 196,398',kind:'lane',label:'CAVE',lx:298,ly:390},
+     {pts:'206,210 378,206 398,274 338,312 228,298 194,250',kind:'lane',label:'A MAIN',lx:294,ly:258},
+     {pts:'430,228 578,220 602,274 540,324 438,316 408,266',kind:'lane',label:'DONUT',lx:504,ly:272},
+     {pts:'606,210 804,206 838,280 820,390 696,430 600,382 574,302',kind:'site',label:'A SITE',lx:706,ly:320},
+     {pts:'818,162 934,162 950,238 846,262 798,220',kind:'def',label:'TEMPLE',lx:876,ly:214},
+     {pts:'608,404 728,404 732,478 616,484',kind:'cover',label:'DEFAULT',lx:672,ly:446},
+     {pts:'434,380 590,376 600,448 446,456 418,418',kind:'lane',label:'MID',lx:518,ly:420},
+     {pts:'814,310 952,310 952,414 838,432 796,372',kind:'def',label:'CT',lx:884,ly:370}
+   ],
+   tSpots:[[264,258],[278,388],[470,272],[128,488]],ctSpots:[[874,214],[880,370],[674,448]],bomb:[694,318],smokes:[[594,302,'DONUT SMOKE'],[790,306,'TEMPLE SMOKE']],flash:[542,280,'POP'],routes:[[[130,490],[226,446],[304,398],[436,338],[592,306]],[[270,258],[356,258],[454,268],[564,286]]],thumbs:['CAVE TAKE','DONUT SPLIT','TEMPLE RETAKE']
+ },
+ 'DUST II':{
+   key:'DUST II',site:'MID',siteMark:'MID',base:'#726554',line:'#b4a389',hint:'Top Mid / Xbox / Short',hero:'Dust2 · Mid Control',
+   areas:[
+     {pts:'72,534 184,534 216,496 210,434 148,410 92,438 70,482',kind:'spawn',label:'T SPAWN',lx:138,ly:484},
+     {pts:'224,346 408,340 448,392 410,454 268,456 214,400',kind:'lane',label:'TOP MID',lx:318,ly:400},
+     {pts:'436,294 518,292 536,356 480,392 428,350',kind:'cover',label:'XBOX',lx:484,ly:344},
+     {pts:'584,202 760,194 796,244 754,302 620,308 566,252',kind:'lane',label:'SHORT',lx:678,ly:250},
+     {pts:'458,222 572,220 584,276 474,288 446,252',kind:'lane',label:'MID',lx:520,ly:252},
+     {pts:'490,392 618,392 628,470 504,476 470,434',kind:'lane',label:'MID DOORS',lx:558,ly:436},
+     {pts:'808,186 936,186 948,270 832,290 784,238',kind:'def',label:'CT MID',lx:874,ly:236},
+     {pts:'786,110 930,106 942,166 822,182 778,146',kind:'def',label:'A SHORT',lx:860,ly:144},
+     {pts:'786,392 942,392 956,488 828,498 782,444',kind:'def',label:'B DOORS',lx:870,ly:446}
+   ],
+   tSpots:[[274,396],[350,396],[482,342],[138,488]],ctSpots:[[874,236],[854,446],[708,250]],bomb:[0,0],smokes:[[576,260,'XBOX SMOKE'],[816,244,'CT SMOKE']],flash:[664,226,'SHORT POP'],routes:[[[138,488],[236,448],[330,402],[458,348],[610,260]],[[500,438],[568,410],[644,360]]],thumbs:['MID TAKE','SHORT SPLIT','B LATE WRAP']
+ },
+ 'ANUBIS':{
+   key:'ANUBIS',site:'A SITE',siteMark:'A',base:'#557078',line:'#9cc3cb',hint:'Water / A Main / Mid',hero:'Anubis · A Site',
+   areas:[
+     {pts:'64,540 182,540 214,498 208,436 146,414 92,444 64,486',kind:'spawn',label:'T SPAWN',lx:138,ly:486},
+     {pts:'190,348 372,340 406,396 382,454 248,460 184,408',kind:'lane',label:'WATER',lx:286,ly:402},
+     {pts:'206,212 376,206 396,272 330,316 220,298 188,246',kind:'lane',label:'A MAIN',lx:292,ly:258},
+     {pts:'444,308 608,304 630,372 474,392 430,350',kind:'lane',label:'MID',lx:526,ly:350},
+     {pts:'644,210 828,206 856,286 840,390 720,424 636,378 612,296',kind:'site',label:'A SITE',lx:736,ly:318},
+     {pts:'842,154 942,150 952,224 858,242 822,200',kind:'def',label:'HEAVEN',lx:892,ly:196},
+     {pts:'640,402 754,402 758,482 652,486',kind:'cover',label:'PILLAR',lx:704,ly:446},
+     {pts:'832,280 956,280 956,384 846,402 806,340',kind:'def',label:'TEMPLE',lx:892,ly:338},
+     {pts:'450,194 586,190 596,260 470,270 432,228',kind:'lane',label:'CONNECTOR',lx:520,ly:228}
+   ],
+   tSpots:[[254,256],[264,400],[494,346],[138,488]],ctSpots:[[892,198],[892,334],[700,446]],bomb:[730,320],smokes:[[626,250,'HEAVEN SMOKE'],[620,338,'BLOCKER']],flash:[522,296,'ENTRY'],routes:[[[138,488],[232,446],[320,404],[456,350],[610,302]],[[262,256],[348,256],[450,250],[566,252]]],thumbs:['A MAIN TAKE','TEMPLE CLEAR','POST-PLANT WATER']
+ },
+ 'VERTIGO':{
+   key:'VERTIGO',site:'A RAMP',siteMark:'A',base:'#6d6259',line:'#c0ad9d',hint:'Ramp / Generator / Boost',hero:'Vertigo · A Ramp',
+   areas:[
+     {pts:'76,540 186,540 216,498 210,446 150,418 92,442 74,486',kind:'spawn',label:'T SPAWN',lx:140,ly:486},
+     {pts:'210,366 412,358 470,392 470,454 350,486 236,466 186,418',kind:'lane',label:'RAMP',lx:330,ly:416},
+     {pts:'436,330 536,326 552,390 474,412 424,372',kind:'cover',label:'SAND BAGS',lx:488,ly:366},
+     {pts:'586,272 718,266 736,356 610,384 562,322',kind:'cover',label:'GENERATOR',lx:650,ly:320},
+     {pts:'738,208 920,200 952,282 942,390 826,428 732,396 706,306',kind:'site',label:'A SITE',lx:838,ly:316},
+     {pts:'816,116 934,116 944,178 842,194 800,154',kind:'def',label:'SCAFFOLD',lx:876,ly:152},
+     {pts:'720,120 810,120 818,186 736,190 704,150',kind:'def',label:'BOOST',lx:766,ly:154},
+     {pts:'548,410 660,410 664,484 556,490',kind:'lane',label:'ELEVATOR',lx:606,ly:450},
+     {pts:'414,470 532,470 538,534 424,538',kind:'lane',label:'STAIRS',lx:476,ly:506}
+   ],
+   tSpots:[[260,408],[332,406],[470,378],[138,488]],ctSpots:[[876,154],[798,256],[764,344]],bomb:[812,310],smokes:[[556,382,'WALL SMOKE'],[708,252,'SITE SMOKE']],flash:[646,292,'SWING FLASH'],routes:[[[138,488],[236,448],[334,414],[470,378],[610,334],[774,306]],[[472,378],[564,356],[664,322],[758,290]]],thumbs:['RAMP TAKE','SCAFFOLD HOLD','POST-PLANT GENERATOR']
+ },
+ 'TRAIN':{
+   key:'TRAIN',site:'INNER',siteMark:'B',base:'#69737f',line:'#a8b3be',hint:'Ivy / Popdog / Upper',hero:'Train · Inner Retake',
+   areas:[
+     {pts:'74,534 186,534 210,496 206,444 146,418 92,442 72,486',kind:'lane',label:'IVY',lx:136,ly:484},
+     {pts:'244,214 408,210 430,300 374,350 260,336 232,266',kind:'lane',label:'BROWN HALLS',lx:330,ly:278},
+     {pts:'430,170 538,168 550,246 454,258 416,214',kind:'lane',label:'POPDOG',lx:486,ly:214},
+     {pts:'596,140 748,136 760,214 616,224 572,182',kind:'lane',label:'UPPER',lx:674,ly:180},
+     {pts:'580,350 734,350 748,440 598,450 566,398',kind:'lane',label:'LOWER',lx:656,ly:400},
+     {pts:'748,224 926,220 950,314 946,398 822,430 744,394 718,306',kind:'site',label:'INNER SITE',lx:842,ly:318},
+     {pts:'792,126 920,126 934,188 816,204 776,166',kind:'def',label:'BACK BLUE',lx:854,ly:166},
+     {pts:'730,428 854,428 862,504 740,508',kind:'cover',label:'BOMB TRAIN',lx:798,ly:468},
+     {pts:'884,330 974,330 978,420 894,424',kind:'def',label:'CONN',lx:930,ly:378}
+   ],
+   tSpots:[[304,276],[488,214],[640,184],[136,484]],ctSpots:[[850,170],[842,286],[930,378]],bomb:[818,322],smokes:[[668,314,'UPPER SMOKE'],[760,352,'SITE SMOKE']],flash:[590,240,'POP'],routes:[[[136,484],[244,410],[338,334],[476,248],[632,192]],[[636,190],[710,220],[786,266]]],thumbs:['POPDOG PICK','INNER RETAKE','UPPER SPLIT']
+ }
+};
+function zoneStyle(kind){
+  return kind==='site'?{fill:'rgba(255,173,25,.18)',stroke:'rgba(255,173,25,.58)'}:
+         kind==='def'?{fill:'rgba(92,188,255,.12)',stroke:'rgba(92,188,255,.38)'}:
+         kind==='cover'?{fill:'rgba(255,255,255,.08)',stroke:'rgba(255,255,255,.16)'}:
+         kind==='spawn'?{fill:'rgba(160,170,180,.08)',stroke:'rgba(160,170,180,.16)'}:
+         {fill:'rgba(255,255,255,.05)',stroke:'rgba(255,255,255,.14)'}
+}
+function parseAlive(alive,side){const m=String(alive||'5V5').match(/(\d)\s*V\s*(\d)/i);let a=m?+m[1]:5,b=m?+m[2]:5;return String(side||'').startsWith('CT')?{ct:a,t:b}:{t:a,ct:b}}
+function cappedMarkers(points,count,prefix){const n=Math.max(1,Math.min(count,points.length));return points.slice(0,n).map((p,i)=>[p[0],p[1],prefix+(i+1)])}
+function pathD(points){return points.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}
+function drawMarkerSet(markers,color,dim){return markers.map(([x,y,l])=>`<g><circle cx="${x}" cy="${y}" r="${dim==='thumb'?14:18}" fill="${color}"/><circle cx="${x}" cy="${y}" r="${dim==='thumb'?22:29}" fill="none" stroke="${color}" opacity=".25"/><text x="${x}" y="${y+4}" text-anchor="middle" fill="#071018" font-family="monospace" font-size="${dim==='thumb'?9:11}" font-weight="900">${l}</text></g>`).join('')}
+function topBoard(scene,variant='main'){
+ const info=MAP_LAYOUTS[scene.mapInfo.map]||MAP_LAYOUTS['MIRAGE'];
+ const accent=scene.mapInfo.accent||'#ffad19', ct='#5cbcff';
+ const dim=variant==='thumb'?'thumb':'main';
+ const w=variant==='hero'?1360:(variant==='thumb'?680:980), h=variant==='hero'?900:(variant==='thumb'?420:700);
+ const counts=parseAlive(scene.alive,scene.side), tMarks=cappedMarkers(info.tSpots,Math.min(counts.t,4),'T'), ctMarks=cappedMarkers(info.ctSpots,Math.min(counts.ct,3),'CT');
+ const areas=info.areas.map(a=>{const st=zoneStyle(a.kind);return `<g><polygon points="${a.pts}" fill="${st.fill}" stroke="${st.stroke}" stroke-width="2"/><text x="${a.lx}" y="${a.ly}" text-anchor="middle" fill="#eef3f7" font-family="Arial,sans-serif" font-size="${variant==='thumb'?14:18}" font-weight="800">${esc(a.label)}</text></g>`}).join('');
+ const routePaths=(info.routes||[]).map((pts,i)=>`<path d="${pathD(pts)}" fill="none" stroke="${i===0?accent:ct}" stroke-width="${variant==='thumb'?5:6}" stroke-linecap="round" stroke-dasharray="10 12" opacity=".92"/>`).join('');
+ const utilities=(info.smokes||[]).map(([x,y,label])=>`<g><circle cx="${x}" cy="${y}" r="${variant==='thumb'?24:28}" fill="#d7dee5" opacity=".16"/><circle cx="${x+18}" cy="${y+10}" r="${variant==='thumb'?16:18}" fill="#d7dee5" opacity=".10"/><text x="${x-12}" y="${y-22}" fill="#d7dee5" font-family="monospace" font-size="${variant==='thumb'?10:12}" font-weight="800">${esc(label)}</text></g>`).join('');
+ const flash=info.flash?`<g><circle cx="${info.flash[0]}" cy="${info.flash[1]}" r="${variant==='thumb'?18:22}" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.44)"/><text x="${info.flash[0]}" y="${info.flash[1]+4}" text-anchor="middle" fill="#fff" font-family="monospace" font-size="${variant==='thumb'?8:10}" font-weight="900">F</text><text x="${info.flash[0]-10}" y="${info.flash[1]-22}" fill="#fff" font-family="monospace" font-size="${variant==='thumb'?9:11}" font-weight="800">${esc(info.flash[2])}</text></g>`:'';
+ const bomb=(scene.goal.includes('POST')||scene.goal.includes('AFTER')||scene.goal.includes('CLUTCH'))&&info.bomb[0]?`<g><rect x="${info.bomb[0]-38}" y="${info.bomb[1]-18}" width="76" height="36" rx="10" fill="rgba(255,173,25,.18)" stroke="rgba(255,173,25,.56)"/><text x="${info.bomb[0]}" y="${info.bomb[1]+5}" text-anchor="middle" fill="#ffd17a" font-family="monospace" font-size="${variant==='thumb'?12:14}" font-weight="900">BOMB</text></g>`:'';
+ const siteMark=`<text x="${variant==='thumb'?470:640}" y="${variant==='thumb'?362:624}" fill="rgba(255,255,255,.045)" font-family="Arial,sans-serif" font-size="${variant==='thumb'?120:168}" font-weight="900">${esc(info.siteMark)}</text>`;
+ const mapGrid=`<rect width="1000" height="700" rx="26" fill="url(#grid)" opacity=".55"/><path d="M0 80H1000M0 620H1000M120 0V700M880 0V700" stroke="rgba(255,255,255,.03)"/>`;
+ const meta=`<g><rect x="${variant==='thumb'?490:680}" y="${variant==='thumb'?24:28}" width="${variant==='thumb'?172:252}" height="${variant==='thumb'?154:170}" rx="18" fill="rgba(6,10,14,.82)" stroke="rgba(255,255,255,.12)"/>${[['MAP',info.key],['SIDE',scene.side],['ALIVE',scene.alive],['ECON',scene.econ],['TIMER',scene.timer]].map((row,i)=>`<text x="${variant==='thumb'?508:704}" y="${variant==='thumb'?50+24*i:58+27*i}" fill="${i%2?accent:'#7f94a5'}" font-family="monospace" font-size="${variant==='thumb'?11:12}" font-weight="800">${row[0]}</text><text x="${variant==='thumb'?586:792}" y="${variant==='thumb'?50+24*i:58+27*i}" fill="#eef3f7" font-family="Arial,sans-serif" font-size="${variant==='thumb'?12:14}" font-weight="800">${esc(row[1])}</text>`).join('')}<text x="${variant==='thumb'?508:704}" y="${variant==='thumb'?170:192}" fill="#7f94a5" font-family="monospace" font-size="${variant==='thumb'?10:11}" font-weight="800">CALL</text><text x="${variant==='thumb'?586:792}" y="${variant==='thumb'?170:192}" fill="#eef3f7" font-family="Arial,sans-serif" font-size="${variant==='thumb'?12:14}" font-weight="800">${esc(scene.goal)}</text></g>`;
+ const titleBox=variant==='hero'
+   ? `<g><rect x="42" y="42" width="420" height="188" rx="24" fill="rgba(6,10,14,.80)" stroke="rgba(255,255,255,.12)"/><text x="72" y="84" fill="${accent}" font-family="monospace" font-size="18" font-weight="900">REAL MAP RADAR // ${esc(info.key)}</text><text x="72" y="132" fill="#eef3f7" font-family="Arial,sans-serif" font-size="56" font-weight="900">${esc(info.site)}</text><text x="72" y="168" fill="#9cb0be" font-family="Arial,sans-serif" font-size="18" font-weight="600">地图雷达 · 站位点位 · 道具路线 · 残局处理</text><text x="72" y="198" fill="#7e94a5" font-family="monospace" font-size="15" font-weight="800">把重点从旧背景图，拉回到真正的地图与处理逻辑上</text></g>`
+   : `<g><rect x="28" y="24" width="${variant==='thumb'?234:290}" height="${variant==='thumb'?88:112}" rx="18" fill="rgba(6,10,14,.82)" stroke="rgba(255,255,255,.12)"/><text x="48" y="${variant==='thumb'?52:56}" fill="${accent}" font-family="monospace" font-size="${variant==='thumb'?13:14}" font-weight="900">${esc(info.key)} // ${esc(info.site)}</text><text x="48" y="${variant==='thumb'?84:92}" fill="#eef3f7" font-family="Arial,sans-serif" font-size="${variant==='thumb'?28:34}" font-weight="900">${esc(scene.state)}</text><text x="48" y="${variant==='thumb'?106:116}" fill="#9cb0be" font-family="monospace" font-size="${variant==='thumb'?11:13}" font-weight="800">${esc(scene.subline||scene.goal)}</text></g>`;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 1000 700"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101a23"/><stop offset="1" stop-color="#18232e"/></linearGradient><pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="rgba(255,255,255,.03)"/></pattern></defs><rect width="1000" height="700" rx="26" fill="url(#bg)"/><rect x="18" y="18" width="964" height="664" rx="22" fill="none" stroke="rgba(255,255,255,.08)"/>${mapGrid}<circle cx="840" cy="116" r="84" fill="${accent}" opacity=".05"/><circle cx="148" cy="582" r="98" fill="#5cbcff" opacity=".05"/>${siteMark}${areas}${routePaths}${utilities}${flash}${bomb}${drawMarkerSet(tMarks,accent,dim)}${drawMarkerSet(ctMarks,ct,dim)}${titleBox}${meta}</svg>`;
  return svgUri(svg)
 }
-function mapThumb(scene,label){return mapScene(Object.assign({},scene,{shortLead:label||scene.shortLead}),'thumb')}
-function buildScenario(i){const mapInfo=MAP_LIBRARY[i%MAP_LIBRARY.length],situation=SITUATION_LIBRARY[i%SITUATION_LIBRARY.length],question=QUESTION_FLAVORS[i%QUESTION_FLAVORS.length];const photo=CS_ART[i%CS_ART.length];const skins=[SKIN_LIBRARY[i%SKIN_LIBRARY.length],SKIN_LIBRARY[(i+1)%SKIN_LIBRARY.length],SKIN_LIBRARY[(i+2)%SKIN_LIBRARY.length]];return{index:i+1,mapInfo,...situation,question,photo,skins,shortLead:`${mapInfo.hint} · ${situation.goal}`,thumbA:`站位：${mapInfo.zones.slice(0,3).join(' / ')}`,thumbB:`残局：${mapInfo.zones.slice(-3).join(' / ')}`,intelTitle:`${mapInfo.map} · ${situation.goal}`,intel:[`<strong>场景概述：</strong>${mapInfo.map} ${mapInfo.site}，${situation.alive}，${situation.side}。${situation.lead}`,`<strong>已知站位：</strong>${situation.known}`,`<strong>残局思路：</strong>${situation.focus}`]}}
+function mapScene(scene,variant='main'){return topBoard(scene,variant)}
+function mapThumb(scene,label){const s=Object.assign({},scene,{state:label||scene.state,subline:scene.focus||scene.subline});return topBoard(s,'thumb')}
+function buildScenario(i){
+  const mapInfo=MAP_LIBRARY[i%MAP_LIBRARY.length], situation=SITUATION_LIBRARY[i%SITUATION_LIBRARY.length], question=QUESTION_FLAVORS[i%QUESTION_FLAVORS.length];
+  const skins=[SKIN_LIBRARY[i%SKIN_LIBRARY.length],SKIN_LIBRARY[(i+1)%SKIN_LIBRARY.length],SKIN_LIBRARY[(i+2)%SKIN_LIBRARY.length]];
+  const layout=MAP_LAYOUTS[mapInfo.map]||MAP_LAYOUTS['MIRAGE'];
+  return {index:i+1,mapInfo,...situation,question,skins,thumbA:layout.thumbs[0],thumbB:layout.thumbs[1],thumbC:(layout.thumbs&&layout.thumbs[2])||layout.hint,intelTitle:`${mapInfo.map} · ${mapInfo.site} · ${situation.goal}`,intel:[`<strong>地图场景：</strong>${mapInfo.map} ${mapInfo.site}，${situation.alive}，${situation.side}，${situation.econ}。`, `<strong>已知信息：</strong>${situation.known}`, `<strong>判断重点：</strong>${situation.focus}`, `<strong>地图关键点：</strong>${layout.hint}`]}
+}
 const TACTICAL_PACKS=QUESTIONS.map((_,i)=>buildScenario(i));
+
 
 let idx=0,answers=[],lastResult=null,deferredInstallPrompt=null;
 const $=id=>document.getElementById(id);
@@ -107,11 +248,11 @@ function startQuiz(){idx=0;answers=[];try{localStorage.removeItem('rounddna_v4_p
 function resumeQuiz(){const p=safeRead('rounddna_v4_progress');if(!p||!Array.isArray(p.answers))return startQuiz();idx=Math.min(Number(p.idx)||0,QUESTIONS.length-1);answers=p.answers;setView('quiz');renderQ();scrollTopSmooth()}
 function renderQ(){
  const q=QUESTIONS[idx],pct=Math.round(idx/QUESTIONS.length*100),pack=TACTICAL_PACKS[idx%TACTICAL_PACKS.length];
- $('progressText').textContent=`QUESTION ${String(idx+1).padStart(2,'0')} / ${QUESTIONS.length}`;$('progressPct').textContent=pct+'%';$('bar').style.width=pct+'%';$('roundTag').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('sceneTag').textContent=q.scene_en;$('sceneZh').textContent=q.scene_zh+' / '+q.scene_en;$('sceneDesc').textContent=pack.question;$('qtext').textContent='这时你更倾向于怎么处理？';$('backBtn').style.visibility=idx?'visible':'hidden';
+ $('progressText').textContent=`QUESTION ${String(idx+1).padStart(2,'0')} / ${QUESTIONS.length}`;$('progressPct').textContent=pct+'%';$('bar').style.width=pct+'%';$('roundTag').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('sceneTag').textContent=q.scene_en;$('sceneZh').textContent=q.scene_zh+' / '+q.scene_en;$('sceneDesc').textContent='根据地图雷达、人物站位、路线与已知信息做判断';$('qtext').textContent=pack.question;$('backBtn').style.visibility=idx?'visible':'hidden';
  $('mapTag').textContent=pack.mapInfo.map;$('sideTag').textContent=pack.side;$('aliveTag').textContent=pack.alive;$('economyTag').textContent=pack.econ;$('timerTag').textContent=pack.timer;
- $('scenarioChipMap').textContent=`${pack.mapInfo.map} · ${pack.mapInfo.site}`;$('scenarioChipAlive').textContent=pack.alive;$('scenarioChipGoal').textContent=pack.goal;$('scenarioLead').textContent=pack.question;$('scenarioKnown').textContent=pack.known;$('scenarioFocus').textContent=pack.focus;
+ $('scenarioChipMap').textContent=`${pack.mapInfo.map} · ${pack.mapInfo.site}`;$('scenarioChipAlive').textContent=pack.alive;$('scenarioChipGoal').textContent=pack.goal;$('scenarioLead').textContent=`${pack.side} · ${pack.econ} · 剩余时间 ${pack.timer}`;$('scenarioKnown').textContent='已知信息：'+pack.known;$('scenarioFocus').textContent='判断重点：'+pack.focus;
  $('sceneMapMicro').textContent=`${pack.mapInfo.map} // ${pack.mapInfo.site}`;$('sceneState').textContent=pack.state;$('sceneSubline').textContent=pack.subline;$('radarMapName').textContent=`${pack.mapInfo.map} · ${pack.mapInfo.site}`;$('intelTitle').textContent=pack.intelTitle;$('thumbALabel').textContent=pack.thumbA;$('thumbBLabel').textContent=pack.thumbB;
- $('scenePhoto').src=pack.photo;$('sceneArt').src=mapScene(pack,'main');$('sceneThumbA').src=mapThumb(pack,pack.thumbA);$('sceneThumbB').src=mapThumb(pack,pack.thumbB);pack.skins.forEach((s,n)=>{let img=$('skinQuiz'+(n+1)),lab=$('skinQuizLabel'+(n+1));if(img)img.src=skinCardUri(s,'mini');if(lab)lab.textContent=s.name;});
+ $('sceneArt').src=mapScene(pack,'main');$('sceneThumbA').src=mapThumb(pack,pack.thumbA);$('sceneThumbB').src=mapThumb(pack,pack.thumbB);pack.skins.forEach((s,n)=>{let img=$('skinQuiz'+(n+1)),lab=$('skinQuizLabel'+(n+1));if(img)img.src=skinCardUri(s,'mini');if(lab)lab.textContent=s.name;});
  $('killFeed').innerHTML='';[[pack.mapInfo.map,pack.goal,pack.alive],[pack.side,pack.econ,pack.timer],[pack.mapInfo.site,pack.state,'READ']].forEach(arr=>{let row=document.createElement('div');row.className='killFeedItem';row.innerHTML=`<span>${arr[0]}</span><i>${arr[1]}</i><b>${arr[2]}</b>`;$('killFeed').appendChild(row)});
  $('weaponBar').innerHTML='';const weaponSets={POST:'AWP,FLASH,SMOKE,KIT',EXEC:'AK-47,FLASH,SMOKE,MOLOTOV',RETAKE:'M4A1-S,FLASH,SMOKE,KIT',OPENING:'GLOCK,FLASH,SMOKE',ADVANTAGE:'M4A1-S,HE,FLASH,SMOKE',CLUTCH:'AK-47,FLASH,SMOKE',ANCHOR:'M4A4,SMOKE,FLASH,HE'};const set=(weaponSets[(pack.goal||'').split('-')[0]]||weaponSets[pack.goal]||'AK-47,AWP,FLASH,SMOKE').split(',');const weaponIcons={"AK-47":"⌁","M4A1-S":"⌁","M4A4":"⌁","AWP":"◎","DEAGLE":"◈","GALIL":"⌁","AUG":"⌁","MAC-10":"⌁","TEC-9":"◈","SMOKE":"S","FLASH":"F","MOLOTOV":"M","INCENDIARY":"M","HE":"H","KIT":"K","GLOCK":"◈"};set.forEach(w=>{let s=document.createElement('span');s.innerHTML=`<em>${weaponIcons[w]||'•'}</em>${w}`;$('weaponBar').appendChild(s)});
  $('intelList').innerHTML='';pack.intel.forEach(t=>{let li=document.createElement('li');li.innerHTML=t;$('intelList').appendChild(li)});
@@ -166,4 +307,4 @@ async function makePoster(){
 function wrapText(ctx,text,x,y,maxWidth,lineHeight){let chars=[...text],line='';for(let ch of chars){let t=line+ch;if(ctx.measureText(t).width>maxWidth&&line){ctx.fillText(line,x,y);line=ch;y+=lineHeight}else line=t}if(line)ctx.fillText(line,x,y)}
 function installPWA(){if(deferredInstallPrompt){deferredInstallPrompt.prompt();deferredInstallPrompt=null}else toast('手机浏览器菜单中选择“添加到主屏幕”即可')}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e});
-window.addEventListener('load',()=>{const p=safeRead('rounddna_v4_progress');if(p&&Array.isArray(p.answers)&&p.answers.length)$('resumeQuizBtn').hidden=false;const heroPack=TACTICAL_PACKS[0],heroPack2=TACTICAL_PACKS[1],heroPack3=TACTICAL_PACKS[2];$('heroPhoto').src=heroPack.photo;$('heroArt').src=mapScene(heroPack,'hero');$('heroStageMap').textContent=`${heroPack.mapInfo.map} · ${heroPack.mapInfo.site}`;$('heroMap1').src=heroPack.photo;$('heroMap2').src=heroPack2.photo;$('heroMap3').src=heroPack3.photo;[SKIN_LIBRARY[0],SKIN_LIBRARY[1],SKIN_LIBRARY[2],SKIN_LIBRARY[3]].forEach((s,i)=>{let img=$('skinHome'+(i+1)),lab=$('skinHomeLabel'+(i+1));if(img)img.src=skinCardUri(s,'mini');if(lab)lab.textContent=s.name;});$('heroMapLabel1').textContent=heroPack.mapInfo.hero;$('heroMapLabel2').textContent=heroPack2.mapInfo.hero;$('heroMapLabel3').textContent=heroPack3.mapInfo.hero;$('heroMapHint1').textContent=heroPack.mapInfo.hint;$('heroMapHint2').textContent=heroPack2.mapInfo.hint;$('heroMapHint3').textContent=heroPack3.mapInfo.hint;PLAYERS.slice(0,6).forEach((p,i)=>{let img=document.querySelector(`[data-peak-preview="${i}"]`);if(img)loadPeakImage(img,p)});if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js?v=7.0').catch(()=>{})});
+window.addEventListener('load',()=>{const p=safeRead('rounddna_v4_progress');if(p&&Array.isArray(p.answers)&&p.answers.length)$('resumeQuizBtn').hidden=false;const heroPack=TACTICAL_PACKS[0],heroPack2=TACTICAL_PACKS[1],heroPack3=TACTICAL_PACKS[2];$('heroArt').src=mapScene(heroPack,'hero');$('heroStageMap').textContent=`${heroPack.mapInfo.map} · ${heroPack.mapInfo.site}`;$('heroMap1').src=mapThumb(heroPack,heroPack.mapInfo.hero);$('heroMap2').src=mapThumb(heroPack2,heroPack2.mapInfo.hero);$('heroMap3').src=mapThumb(heroPack3,heroPack3.mapInfo.hero);[SKIN_LIBRARY[0],SKIN_LIBRARY[1],SKIN_LIBRARY[2],SKIN_LIBRARY[3]].forEach((s,i)=>{let img=$('skinHome'+(i+1)),lab=$('skinHomeLabel'+(i+1));if(img)img.src=skinCardUri(s,'mini');if(lab)lab.textContent=s.name;});$('heroMapLabel1').textContent=heroPack.mapInfo.hero;$('heroMapLabel2').textContent=heroPack2.mapInfo.hero;$('heroMapLabel3').textContent=heroPack3.mapInfo.hero;$('heroMapHint1').textContent=heroPack.mapInfo.hint;$('heroMapHint2').textContent=heroPack2.mapInfo.hint;$('heroMapHint3').textContent=heroPack3.mapInfo.hint;PLAYERS.slice(0,6).forEach((p,i)=>{let img=document.querySelector(`[data-peak-preview="${i}"]`);if(img)loadPeakImage(img,p)});if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js?v=9.0').catch(()=>{})});

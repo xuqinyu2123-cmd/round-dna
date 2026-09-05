@@ -1,16 +1,11 @@
-ROUND//DNA V14 · ROUND SNAPSHOT EDITION
+ROUND//DNA V16 · PRO ANALYST EDITION
 
-本版不是只改视觉，而是重做答题小地图系统：
-1. 36 道题全部生成独立战术快照，不同题的站位/路线/关键区域会变化。
-2. 每题主图 = 对应地图原图 + 本题人物站位 + 路线 + 道具点 + 焦点区域。
-3. 下方两张辅助图不再重复：左侧是地图全图，右侧是本题关键区域放大。
-4. Mirage / Inferno / Dust2 / Nuke / Ancient / Anubis / Vertigo / Train 都保持各自原始小地图结构。
-5. 修正题干地图与小地图对应顺序。
-6. 封面改成 ROUND SNAPSHOT 产品风格，减少大块遮挡，让地图成为主视觉。
-7. 答题页地图固定 1:1 比例，避免原地图被拉伸或裁切。
-8. RADAR SNAPSHOT 也改成当前题关键区域，不再使用通用假雷达。
-9. Service Worker 升级为 v14 缓存。
-
-公开商用前请确认第三方地图底图与职业选手海报素材的授权范围。
-
-10. V14.1 优化缓存：HTML/CSS/JS 使用 network-first，新部署后普通刷新更容易直接拿到最新版；36 张战术快照改用 WebP 并按需缓存，降低手机首屏负担。
+核心升级：
+1. 整体视觉从“潮流饰品页”转向“职业赛事转播 / 战术分析台”。
+2. 新增 LIVE ANALYSIS 比赛 HUD：T/CT、存活人数、地图、回合、时间。
+3. 新增 ANALYST DESK：目标、压力等级、人数结构、主要判断类型。
+4. 新增 ROUND TIMELINE：OPENING / MID ROUND / EXEC-RETAKE / CLUTCH，会随题目自动高亮。
+5. 真实小地图继续作为答题核心，布局更紧凑、更像赛事复盘。
+6. 饰品仍保留，但改成 MATCH LOADOUT 辅助模块，不再抢主视觉。
+7. 手机端对 HUD、分析栏、装备栏做了重新排布。
+8. 版本缓存升级至 v16.0。

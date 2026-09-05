@@ -268,7 +268,7 @@ function mapScene(scene,variant='main'){return tacticalBoard(scene,variant)}
 function mapThumb(scene,label){const s=Object.assign({},scene,{state:label||scene.state,subline:scene.focus||scene.subline});return tacticalBoard(s,'thumb')}
 function buildScenario(i){
   const mapInfo=MAP_LIBRARY[i%MAP_LIBRARY.length], situation=SITUATION_LIBRARY[i%SITUATION_LIBRARY.length], question=QUESTION_FLAVORS[i%QUESTION_FLAVORS.length];
-  const skins=[SKIN_LIBRARY[i%SKIN_LIBRARY.length],SKIN_LIBRARY[(i+1)%SKIN_LIBRARY.length],SKIN_LIBRARY[(i+2)%SKIN_LIBRARY.length]];
+  const skins=Array.from({length:5},(_,k)=>SKIN_LIBRARY[(i+k)%SKIN_LIBRARY.length]);
   const layout=MAP_LAYOUTS[mapInfo.map]||MAP_LAYOUTS['MIRAGE'];
   return {index:i+1,mapInfo,...situation,question,skins,photo:'',photoAlt:'',thumbA:'站位摘要',thumbB:'后续处理',thumbC:(layout.thumbs&&layout.thumbs[2])||layout.hint,intelTitle:`${mapInfo.map} · ${mapInfo.site} · ${situation.goal}`,intel:[`<strong>地图与局势：</strong>${mapInfo.map} ${mapInfo.site}，${situation.alive}，${situation.side}，${situation.econ}。`,`<strong>已知信息：</strong>${situation.known}`,`<strong>残局思路：</strong>${situation.focus}`,`<strong>关键区域：</strong>${layout.hint}`]}
 }
@@ -287,16 +287,45 @@ function setView(name){['hero','quiz','result'].forEach(x=>$(x).style.display=x=
 function scrollTopSmooth(){window.scrollTo({top:0,behavior:'smooth'})}
 function startQuiz(){idx=0;answers=[];try{localStorage.removeItem('rounddna_v4_progress')}catch(e){};setView('quiz');renderQ();scrollTopSmooth()}
 function resumeQuiz(){const p=safeRead('rounddna_v4_progress');if(!p||!Array.isArray(p.answers))return startQuiz();idx=Math.min(Number(p.idx)||0,QUESTIONS.length-1);answers=p.answers;setView('quiz');renderQ();scrollTopSmooth()}
+function pressureLabel(pack){
+ const t=parseInt(String(pack.timer||'1:30').split(':')[0])*60+parseInt(String(pack.timer||'1:30').split(':')[1]||0);
+ if((pack.alive||'').startsWith('1V')||t<=25)return 'CRITICAL';
+ if(t<=45||['RETAKE','CLUTCH','POST-PLANT','AFTERPLANT'].includes(pack.goal))return 'HIGH';
+ if(t<=75||['EXEC','MID ROUND','LATE ROUND'].includes(pack.goal))return 'MEDIUM';
+ return 'LOW';
+}
+function primaryRead(pack){
+ const g=String(pack.goal||'').toUpperCase();
+ if(g.includes('RETAKE'))return 'SYNC';
+ if(g.includes('POST')||g.includes('CLUTCH')||g.includes('AFTER'))return 'TIMING';
+ if(g.includes('EXEC'))return 'UTILITY';
+ if(g.includes('ANCHOR'))return 'SURVIVAL';
+ if(g.includes('ADVANTAGE'))return 'STRUCTURE';
+ if(g.includes('OPEN'))return 'SPACE';
+ return 'INFORMATION';
+}
+function phaseFromPack(pack){
+ const g=String(pack.goal||'').toUpperCase();
+ if(g.includes('CLUTCH')||g.includes('POST')||g.includes('AFTER')||g.includes('SAVE'))return 'CLUTCH';
+ if(g.includes('EXEC')||g.includes('RETAKE')||g.includes('ANCHOR'))return 'EXEC';
+ if(g.includes('MID')||g.includes('LATE')||g.includes('ADVANTAGE'))return 'MID';
+ return 'OPENING';
+}
+function setRoundTimeline(pack){
+ const order=['OPENING','MID','EXEC','CLUTCH'],phase=phaseFromPack(pack),active=order.indexOf(phase);
+ document.querySelectorAll('#roundTimeline span').forEach((el,i)=>{el.classList.toggle('done',i<active);el.classList.toggle('active',i===active)});
+}
 function renderQ(){
  const q=QUESTIONS[idx],pct=Math.round(idx/QUESTIONS.length*100),pack=TACTICAL_PACKS[idx%TACTICAL_PACKS.length];
- $('progressText').textContent=`QUESTION ${String(idx+1).padStart(2,'0')} / ${QUESTIONS.length}`;$('progressPct').textContent=pct+'%';$('bar').style.width=pct+'%';$('roundTag').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('sceneTag').textContent=q.scene_en;$('sceneZh').textContent=q.scene_zh+' / '+q.scene_en;$('sceneDesc').textContent='先读对应地图全图，再看本题独立站位、路线与关键区域；每题战术快照都不同';$('qtext').textContent=pack.question;$('backBtn').style.visibility=idx?'visible':'hidden';
+ $('progressText').textContent=`QUESTION ${String(idx+1).padStart(2,'0')} / ${QUESTIONS.length}`;$('progressPct').textContent=pct+'%';$('bar').style.width=pct+'%';$('roundTag').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('sceneTag').textContent=q.scene_en;$('sceneZh').textContent=q.scene_zh+' / '+q.scene_en;$('sceneDesc').textContent='先看真实地图小地图，再读本题站位、路线、关键点位与残局信息；每题快照都不同';$('qtext').textContent=pack.question;$('backBtn').style.visibility=idx?'visible':'hidden';
  $('mapTag').textContent=pack.mapInfo.map;$('sideTag').textContent=pack.side;$('aliveTag').textContent=pack.alive;$('economyTag').textContent=pack.econ;$('timerTag').textContent=pack.timer;
+ $('broadcastRound').textContent=`ROUND ${String(idx+1).padStart(2,'0')}`;$('broadcastClock').textContent=pack.timer;$('broadcastMap').textContent=pack.mapInfo.map;$('broadcastTState').textContent=pack.side==='T SIDE'?'YOUR SIDE':'OPPONENT';$('broadcastCTState').textContent=pack.side==='CT SIDE'?'YOUR SIDE':'OPPONENT';const am=parseAlive(pack.alive,pack.side);$('broadcastTAlive').textContent=`${am.t} ALIVE`;$('broadcastCTAlive').textContent=`${am.ct} ALIVE`;$('analystGoal').textContent=pack.goal;$('analystPressure').textContent=pressureLabel(pack);$('analystStructure').textContent=pack.alive;$('analystRead').textContent=primaryRead(pack);setRoundTimeline(pack);
  $('scenarioChipMap').textContent=`${pack.mapInfo.map} · ${pack.mapInfo.site}`;$('scenarioChipAlive').textContent=pack.alive;$('scenarioChipGoal').textContent=pack.goal;$('scenarioLead').textContent=`${pack.side} · ${pack.econ} · 剩余时间 ${pack.timer}`;$('scenarioKnown').textContent='已知信息：'+pack.known;$('scenarioFocus').textContent='判断重点：'+pack.focus;
- $('sceneMapMicro').textContent=`${pack.mapInfo.map} // ${pack.mapInfo.site}`;$('sceneState').textContent=pack.state;$('sceneSubline').textContent=pack.subline;$('radarMapName').textContent=`${pack.mapInfo.map} · ${pack.mapInfo.site}`;$('intelTitle').textContent=pack.intelTitle;$('thumbALabel').textContent='地图全图 · '+pack.mapInfo.map;$('thumbBLabel').textContent='关键区域放大 · '+pack.mapInfo.site;
+ $('sceneMapMicro').textContent=`${pack.mapInfo.map} // ${pack.mapInfo.site}`;$('sceneState').textContent=pack.state;$('sceneSubline').textContent=pack.subline;$('radarMapName').textContent=`${pack.mapInfo.map} · ${pack.mapInfo.site}`;$('intelTitle').textContent=pack.intelTitle;$('thumbALabel').textContent='官方小地图 · '+pack.mapInfo.map;$('thumbBLabel').textContent='战术标注 · '+pack.mapInfo.site;
  $('scenePhoto').src=scenarioImage(pack);$('sceneArt').src='';$('sceneThumbA').src=mapImagePath(pack.mapInfo.map);$('sceneThumbB').src=scenarioFocusImage(pack);pack.skins.forEach((s,n)=>{let img=$('skinQuiz'+(n+1)),lab=$('skinQuizLabel'+(n+1));if(img)img.src=skinCardUri(s,'mini');if(lab)lab.textContent=s.name;});
  $('killFeed').innerHTML='';[[pack.mapInfo.map,pack.goal,pack.alive],[pack.side,pack.econ,pack.timer],[pack.mapInfo.site,pack.state,'READ']].forEach(arr=>{let row=document.createElement('div');row.className='killFeedItem';row.innerHTML=`<span>${arr[0]}</span><i>${arr[1]}</i><b>${arr[2]}</b>`;$('killFeed').appendChild(row)});
  $('weaponBar').innerHTML='';const weaponSets={POST:'AWP,FLASH,SMOKE,KIT',EXEC:'AK-47,FLASH,SMOKE,MOLOTOV',RETAKE:'M4A1-S,FLASH,SMOKE,KIT',OPENING:'GLOCK,FLASH,SMOKE',ADVANTAGE:'M4A1-S,HE,FLASH,SMOKE',CLUTCH:'AK-47,FLASH,SMOKE',ANCHOR:'M4A4,SMOKE,FLASH,HE'};const set=(weaponSets[(pack.goal||'').split('-')[0]]||weaponSets[pack.goal]||'AK-47,AWP,FLASH,SMOKE').split(',');const weaponIcons={"AK-47":"⌁","M4A1-S":"⌁","M4A4":"⌁","AWP":"◎","DEAGLE":"◈","GALIL":"⌁","AUG":"⌁","MAC-10":"⌁","TEC-9":"◈","SMOKE":"S","FLASH":"F","MOLOTOV":"M","INCENDIARY":"M","HE":"H","KIT":"K","GLOCK":"◈"};set.forEach(w=>{let s=document.createElement('span');s.innerHTML=`<em>${weaponIcons[w]||'•'}</em>${w}`;$('weaponBar').appendChild(s)});
- const mr=document.querySelector('.miniRadar');if(mr){mr.style.backgroundImage=`linear-gradient(rgba(5,9,13,.08),rgba(5,9,13,.08)),url(${scenarioFocusImage(pack)})`;}$('intelList').innerHTML='';pack.intel.forEach(t=>{let li=document.createElement('li');li.innerHTML=t;$('intelList').appendChild(li)});
+ const mr=document.querySelector('.miniRadar');if(mr){mr.style.backgroundImage=`linear-gradient(rgba(5,9,13,.04),rgba(5,9,13,.04)),url(${mapImagePath(pack.mapInfo.map)})`;}document.querySelectorAll('.skinMini span').forEach((el,k)=>{const item=pack.skins[k];if(item)el.textContent=item.note;});$('intelList').innerHTML='';pack.intel.forEach(t=>{let li=document.createElement('li');li.innerHTML=t;$('intelList').appendChild(li)});
  const hint=['SPACE / TEMPO','AIM / EXECUTION','TEAM / TRADE','READ / CONTROL'];
  $('options').innerHTML='';q.o.forEach((o,i)=>{const b=document.createElement('button');b.className='option';b.innerHTML=`<span class="optionKey">${String.fromCharCode(65+i)}</span><span class="optionCopy"><b>${o.t}</b><small>${hint[i]}</small></span><span class="optionIcon">${['✦','◎','✚','↗'][i]}</span>`;b.onclick=()=>choose(i);$('options').appendChild(b)});
  safeStore('rounddna_v4_progress',{idx,answers});
@@ -357,4 +386,4 @@ function scenarioImage(scene){return `./assets/scenarios/q${String(scene.index).
 function scenarioFocusImage(scene){return `./assets/scenarios/q${String(scene.index).padStart(2,'0')}-focus.webp`}
 function mapScene(scene,variant='main'){return scenarioImage(scene)}
 function mapThumb(scene,label){return label==='关键区域'?scenarioFocusImage(scene):mapImagePath(scene.mapInfo.map)}
-window.addEventListener('load',()=>{const p=safeRead('rounddna_v4_progress');if(p&&Array.isArray(p.answers)&&p.answers.length)$('resumeQuizBtn').hidden=false;const heroPack=TACTICAL_PACKS[0],heroPack2=TACTICAL_PACKS[1],heroPack3=TACTICAL_PACKS[2];$('heroPhoto').src=scenarioImage(heroPack);$('heroArt').src='';$('heroStageMap').textContent='MIRAGE · A SITE / ROUND SNAPSHOT';$('heroMap1').src=scenarioImage(heroPack);$('heroMap2').src=scenarioImage(heroPack2);$('heroMap3').src=scenarioImage(heroPack3);[SKIN_LIBRARY[0],SKIN_LIBRARY[1],SKIN_LIBRARY[2],SKIN_LIBRARY[3]].forEach((s,i)=>{let img=$('skinHome'+(i+1)),lab=$('skinHomeLabel'+(i+1));if(img)img.src=skinCardUri(s,'mini');if(lab)lab.textContent=s.name;});$('heroMapLabel1').textContent='Mirage · A Split';$('heroMapLabel2').textContent='Inferno · Banana';$('heroMapLabel3').textContent='Dust2 · Mid Control';$('heroMapHint1').textContent='Palace / Ramp / Jungle';$('heroMapHint2').textContent='Car / Coffins / CT';$('heroMapHint3').textContent='Top Mid / Xbox / Short';PLAYERS.slice(0,6).forEach((p,i)=>{let img=document.querySelector(`[data-peak-preview="${i}"]`);if(img)loadPeakImage(img,p)});if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js?v=14.1').catch(()=>{})});
+window.addEventListener('load',()=>{const p=safeRead('rounddna_v4_progress');if(p&&Array.isArray(p.answers)&&p.answers.length)$('resumeQuizBtn').hidden=false;const heroPack=TACTICAL_PACKS[0],heroPack2=TACTICAL_PACKS[1],heroPack3=TACTICAL_PACKS[2];$('heroPhoto').src=scenarioImage(heroPack);$('heroArt').src='';$('heroStageMap').textContent='MIRAGE · A SITE / TACTICAL RADAR';$('heroMap1').src=scenarioImage(heroPack);$('heroMap2').src=scenarioImage(heroPack2);$('heroMap3').src=scenarioImage(heroPack3);[SKIN_LIBRARY[0],SKIN_LIBRARY[1],SKIN_LIBRARY[2],SKIN_LIBRARY[3]].forEach((s,i)=>{let img=$('skinHome'+(i+1)),lab=$('skinHomeLabel'+(i+1));if(img)img.src=skinCardUri(s,'mini');if(lab)lab.textContent=s.name;});$('heroMapLabel1').textContent='Mirage · A Split';$('heroMapLabel2').textContent='Inferno · Banana';$('heroMapLabel3').textContent='Dust2 · Mid Control';$('heroMapHint1').textContent='真实底图 / 站位推演';$('heroMapHint2').textContent='回防路线 / 关键区域';$('heroMapHint3').textContent='中路控制 / 读图判断';PLAYERS.slice(0,6).forEach((p,i)=>{let img=document.querySelector(`[data-peak-preview="${i}"]`);if(img)loadPeakImage(img,p)});if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js?v=16.0').catch(()=>{})});

@@ -1,3 +1,8 @@
+[V5 更新]
+- 答题页新增 IN-GAME HUD 布局
+- 新增更多 CS 本体场景图（主图 + 两张额外图）
+- 新增雷达/Round Intel/武器栏/Kill Feed
+
 ROUND//DNA V4 · PEAK ERA EDITION
 
 部署方法（与之前 AEVEMORA 一样）：
